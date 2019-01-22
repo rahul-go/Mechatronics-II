@@ -25,25 +25,24 @@ import pyb
 ## An encoder driver object
 #
 #  Details
-#  @author Your Name
+#  @author Rahul Goyal, Cameron Kao, and Harry Whinnery
 #  @copyright License Info
 #  @date January 1, 1970
+
 class Encoder:
     
     ## Constructor for encoder driver
     #
     #  Detailed info on encoder driver constructor
-    def __init__(self, timer, chA, chB, pinA, pinB):
+    def __init__(self, timer, channels, pins):
         
         # Set up encoder pins
         self.timer = pyb.Timer(timer, prescaler=0, period=65535)
-        # FIX PIN
-        self.timer.channel(chA, pyb.Timer.ENC_AB, pin=pyb.Pin.board.PB6)
-        # FIX PIN
-        self.timer.channel(chB, pyb.Timer.ENC_AB, pin=pyb.Pin.board.PB7) 
+        self.timer.channel(channels[0], pyb.Timer.ENC_AB, pins[0])
+        self.timer.channel(channels[1], pyb.Timer.ENC_AB, pins[1]) 
         
         # Initialize position and offset to 0
-        self.zero()          
+        self.zero()
 
     ## Gets the encoder's position
     #
@@ -54,16 +53,19 @@ class Encoder:
         self.position = self.timer.counter() - self.offset
         
         delta = self.position - prev_position
-        if delta > 32767:
-            pass
-        elif delta < -32767:
-            pass
+        if delta > 2000:
+            delta -= 4000
+        elif delta < -2000:
+            delta += 4000
         self.distance += delta
+
+        return self.distance
 
     ## Zeros out the encoder
     #
     #  Detailed info on encoder zero function
     def zero(self):
+
         self.position = 0;
         self.distance = 0;
         self.offset = self.timer.counter();
