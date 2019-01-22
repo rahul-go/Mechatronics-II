@@ -8,12 +8,15 @@
 #  @copyright License Info
 #
 #  @date January 1, 1970
-#
-#
 
+import encoder
 import motor
 
 ## A motor driver object
-moto = motor.MotorDriver()
+m = motor.MotorDriver()
+## An encoder object
+e = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
 
-moto.set_duty_cycle(50)
+while(True):
+	print(e.read())
+	utime.sleep_ms(10)
