@@ -2,7 +2,7 @@
 \label{encoder_8py}\index{encoder.\+py@{encoder.\+py}}
 
 
-The main function of the Encoder file is to enable multiple encoder objects to be made.  
+The encoder module contains the Encoder class.  
 
 
 \subsection*{Classes}
@@ -13,11 +13,7 @@ class \mbox{\hyperlink{classencoder_1_1_encoder}{encoder.\+Encoder}}
 
 
 \subsection{Detailed Description}
-The main function of the Encoder file is to enable multiple encoder objects to be made. 
-
-Each encoder should be able to return the correct position of the motor encoder when the \char`\"{}read()\char`\"{} function is called. Each encoder should also be able to zero or resets it\textquotesingle{}s position by calling the zero function.
-
-The Encoder class may be used to create encoder multiple encoder objects. The \char`\"{}\+\_\+\+\_\+init\+\_\+\+\_\+\char`\"{} function will be used by passing in the pin locations for the encoder accordingly, the timer correlating to the the pin locations, and the two channels correlating to the pin locations. The correct pin locations and other correlating parameters can be found in the user manual. The \char`\"{}read()\char`\"{} function will be used to return the position of the motor encoder wheel using a position between 0 and 65535. The \char`\"{}zero()\char`\"{} function will cause the encoder to reset its position to 0.
+The encoder module contains the Encoder class. 
 
 \begin{DoxyAuthor}{Author}
 Rahul Goyal, Cameron Kao, Harry Whinnery

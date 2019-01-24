@@ -9,11 +9,11 @@ An encoder driver object.
 \begin{DoxyCompactItemize}
 \item 
 def \mbox{\hyperlink{classencoder_1_1_encoder_a34939827412badc93f8744540676e833}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, pins, timer, channels)
-\begin{DoxyCompactList}\small\item\em Constructor for encoder driver. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Constructor for the encoder driver. \end{DoxyCompactList}\item 
 def \mbox{\hyperlink{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}{read}} (self)
-\begin{DoxyCompactList}\small\item\em Gets the encoder\textquotesingle{}s position. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gets the encoder\textquotesingle{}s traveled distance. \end{DoxyCompactList}\item 
 def \mbox{\hyperlink{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}{zero}} (self)
-\begin{DoxyCompactList}\small\item\em Zeros out the encoder. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Zeros the encoder. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -31,7 +31,7 @@ def \mbox{\hyperlink{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}
 \subsection{Detailed Description}
 An encoder driver object. 
 
-Details \begin{DoxyAuthor}{Author}
+The \mbox{\hyperlink{classencoder_1_1_encoder}{Encoder}} class enables the user to implement multiple encoders without needing to rewrite code for each one. All encoders can run and be read from independently. All encoders can be zeroed independently. The class also attempts to handle timer counter underflow/overflow errors. \begin{DoxyAuthor}{Author}
 Rahul Goyal, Cameron Kao, and Harry Whinnery 
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
@@ -51,9 +51,20 @@ January 24, 2019
 
 
 
-Constructor for encoder driver. 
+Constructor for the encoder driver. 
 
-The \char`\"{}\+\_\+\+\_\+init\+\_\+\+\_\+\char`\"{} constructor will be used by passing in the pin locations for the encoder accordingly, the timer correlating to the the pin locations, and the two channels correlating to the pin locations. The correct pin locations and other correlating parameters can be found in the user manual. 
+The constructor is called by passing the pin objects (as a list) corresponding to the encoder, the corresponding timer ID, and the corresponding channels (as a list). The channels should be passed with with respect to the order in which the pins objects were passed. Corresponding pins, timers, and channels can be found in the user manual of the microcontroller.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pins} & Pin objects for the encoder are passed as a list to specify the pins to which the physical encoder is attached.\\
+\hline
+{\em timer} & Timer ID that corresponds to the pins being used. Refer to the user manual of the microcontroller to determine the correct timer ID.\\
+\hline
+{\em channels} & Channels that correspond to the pins. The channels should be passed with with respect to the order in which the pins objects were passed. Refer to the user manual of the microcontroller to to determined the correct channel for each pin. \\
+\hline
+\end{DoxyParams}
+
 
 \subsection{Member Function Documentation}
 \mbox{\Hypertarget{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}\label{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}} 
@@ -64,9 +75,9 @@ The \char`\"{}\+\_\+\+\_\+init\+\_\+\+\_\+\char`\"{} constructor will be used by
 
 
 
-Gets the encoder\textquotesingle{}s position. 
+Gets the encoder\textquotesingle{}s traveled distance. 
 
-The \char`\"{}read()\char`\"{} function will be used to return the position of the motor encoder wheel using a position between 0 and 65535. \mbox{\Hypertarget{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}\label{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}} 
+The \char`\"{}read()\char`\"{} function is used to return the distance traveled by the motor in terms of encoder ticks. The function handles underflow and overflow in the 16-\/bit timer counter by calculating the more likely direction of travel in the case of large changes in value. This is most effective and accurate when the read function is called quickly enough. \char`\"{}\+Quickly\char`\"{} is determined as a function of motor speed; a motor spinning more quickly will require the \mbox{\hyperlink{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}{read()}} function to be called more frequently for underflow/overflow to be handled properly. \mbox{\Hypertarget{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}\label{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}} 
 \index{encoder\+::\+Encoder@{encoder\+::\+Encoder}!zero@{zero}}
 \index{zero@{zero}!encoder\+::\+Encoder@{encoder\+::\+Encoder}}
 \subsubsection{\texorpdfstring{zero()}{zero()}}
@@ -74,9 +85,9 @@ The \char`\"{}read()\char`\"{} function will be used to return the position of t
 
 
 
-Zeros out the encoder. 
+Zeros the encoder. 
 
-The zero function makes resets the position to zero, sets the distance to zero, and sets the timer counter to zero. 
+The zero function resets the timer counter, position of the motor, and distance traveled by the motor. 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

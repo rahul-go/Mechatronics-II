@@ -80,13 +80,13 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a34939827412badc93f8744540676e833"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classencoder_1_1_encoder.html#a34939827412badc93f8744540676e833">__init__</a> (self, pins, timer, channels)</td></tr>
-<tr class="memdesc:a34939827412badc93f8744540676e833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for encoder driver.  <a href="#a34939827412badc93f8744540676e833">More...</a><br /></td></tr>
+<tr class="memdesc:a34939827412badc93f8744540676e833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the encoder driver.  <a href="#a34939827412badc93f8744540676e833">More...</a><br /></td></tr>
 <tr class="separator:a34939827412badc93f8744540676e833"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1c1535160682500f5214f45d8197027"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classencoder_1_1_encoder.html#aa1c1535160682500f5214f45d8197027">read</a> (self)</td></tr>
-<tr class="memdesc:aa1c1535160682500f5214f45d8197027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the encoder's position.  <a href="#aa1c1535160682500f5214f45d8197027">More...</a><br /></td></tr>
+<tr class="memdesc:aa1c1535160682500f5214f45d8197027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the encoder's traveled distance.  <a href="#aa1c1535160682500f5214f45d8197027">More...</a><br /></td></tr>
 <tr class="separator:aa1c1535160682500f5214f45d8197027"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae238ecdbcbce8a193c2e0ffbb4d1dd29"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classencoder_1_1_encoder.html#ae238ecdbcbce8a193c2e0ffbb4d1dd29">zero</a> (self)</td></tr>
-<tr class="memdesc:ae238ecdbcbce8a193c2e0ffbb4d1dd29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zeros out the encoder.  <a href="#ae238ecdbcbce8a193c2e0ffbb4d1dd29">More...</a><br /></td></tr>
+<tr class="memdesc:ae238ecdbcbce8a193c2e0ffbb4d1dd29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zeros the encoder.  <a href="#ae238ecdbcbce8a193c2e0ffbb4d1dd29">More...</a><br /></td></tr>
 <tr class="separator:ae238ecdbcbce8a193c2e0ffbb4d1dd29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -103,7 +103,7 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An encoder driver object. </p>
-<p>Details </p><dl class="section author"><dt>Author</dt><dd>Rahul Goyal, Cameron Kao, and Harry Whinnery </dd></dl>
+<p>The <a class="el" href="classencoder_1_1_encoder.html" title="An encoder driver object. ">Encoder</a> class enables the user to implement multiple encoders without needing to rewrite code for each one. All encoders can run and be read from independently. All encoders can be zeroed independently. The class also attempts to handle timer counter underflow/overflow errors. </p><dl class="section author"><dt>Author</dt><dd>Rahul Goyal, Cameron Kao, and Harry Whinnery </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>License Info </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>January 24, 2019 </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -145,8 +145,16 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor for encoder driver. </p>
-<p>The "__init__" constructor will be used by passing in the pin locations for the encoder accordingly, the timer correlating to the the pin locations, and the two channels correlating to the pin locations. The correct pin locations and other correlating parameters can be found in the user manual. </p>
+<p>Constructor for the encoder driver. </p>
+<p>The constructor is called by passing the pin objects (as a list) corresponding to the encoder, the corresponding timer ID, and the corresponding channels (as a list). The channels should be passed with with respect to the order in which the pins objects were passed. Corresponding pins, timers, and channels can be found in the user manual of the microcontroller.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pins</td><td>Pin objects for the encoder are passed as a list to specify the pins to which the physical encoder is attached.</td></tr>
+    <tr><td class="paramname">timer</td><td>Timer ID that corresponds to the pins being used. Refer to the user manual of the microcontroller to determine the correct timer ID.</td></tr>
+    <tr><td class="paramname">channels</td><td>Channels that correspond to the pins. The channels should be passed with with respect to the order in which the pins objects were passed. Refer to the user manual of the microcontroller to to determined the correct channel for each pin. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -167,8 +175,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the encoder's position. </p>
-<p>The "read()" function will be used to return the position of the motor encoder wheel using a position between 0 and 65535. </p>
+<p>Gets the encoder's traveled distance. </p>
+<p>The "read()" function is used to return the distance traveled by the motor in terms of encoder ticks. The function handles underflow and overflow in the 16-bit timer counter by calculating the more likely direction of travel in the case of large changes in value. This is most effective and accurate when the read function is called quickly enough. "Quickly" is determined as a function of motor speed; a motor spinning more quickly will require the <a class="el" href="classencoder_1_1_encoder.html#aa1c1535160682500f5214f45d8197027" title="Gets the encoder&#39;s traveled distance. ">read()</a> function to be called more frequently for underflow/overflow to be handled properly. </p>
 
 </div>
 </div>
@@ -188,8 +196,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Zeros out the encoder. </p>
-<p>The zero function makes resets the position to zero, sets the distance to zero, and sets the timer counter to zero. </p>
+<p>Zeros the encoder. </p>
+<p>The zero function resets the timer counter, position of the motor, and distance traveled by the motor. </p>
 
 </div>
 </div>

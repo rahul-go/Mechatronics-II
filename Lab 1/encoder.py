@@ -76,7 +76,7 @@ class Encoder:
 
         return self.distance
 
-    ## Zeros the encoder.
+    ## Zeroes the encoder.
     #
     #  The zero function resets the timer counter, position of the motor, and
     #  distance traveled by the motor.
