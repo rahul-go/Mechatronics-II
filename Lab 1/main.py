@@ -13,9 +13,8 @@ import encoder
 import pyb
 import utime
 
-## An encoder object
+# An encoder object
 e = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
-
 while(True):
 	print(e.read())
 	utime.sleep_ms(10)
