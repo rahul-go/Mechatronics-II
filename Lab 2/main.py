@@ -13,6 +13,8 @@ import encoder
 import motor
 import utime
 
+
+
 ## A motor object
 m = motor.MotorDriver()
 ## An encoder object
@@ -21,6 +23,5 @@ e = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 8, [1, 2])
 c = controller.Controller(m, e, 30, 30)
 
 while(True):
-    controller.run()
-    utime.sleep_ms(500)
-    print(encoder.read())
+    motor.set_duty_cycle(controller.run(encoder.read()))
+    utime.sleep_ms(50)

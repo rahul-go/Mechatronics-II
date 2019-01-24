@@ -26,14 +26,8 @@ class Controller:
 	#  @param K_p TODO
 	#
 	#  @param x_set TODO
-	#
-	#  @param motor TODO
-	#
-	#  @param encoder TODO
-	def __init__(self, motor, encoder, K_p, x_set):
+	def __init__(self, K_p, x_set):
 		print('Creating a controller!')
-		self.motor = motor
-		self.encoder = encoder
 		self.K_p = K_p
 		self.x_set = x_set
 
@@ -43,8 +37,27 @@ class Controller:
 	#
 	#  TODO
 	def run(self):
-		## X_ACT TODO     
-		self.x_act = self.encoder.read()
-		print(self.x_act)
 		level = self.K_P * (self.x_act - self.x_set)
-		self.motor.set_duty_cycle(level)
+		if level > 100:
+            return 100
+        elif level < -100: 
+            return -100
+        return level
+
+
+
+	## TODO
+	#
+	#  TODO
+	def set_Kp(self, K_p):
+		## TODO
+		self.K_p = K_p
+
+
+
+	## TODO
+	#
+	#  TODO
+	def set_xset(self, x_set):
+		## TODO
+		self.x_set = x_set
