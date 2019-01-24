@@ -42,7 +42,9 @@ class MotorDriver:
 		
 		# Set up timer and channels for PWM
 		tim3 = pyb.Timer(3, freq=20000)
+		## Channel 1 of Timer 3
 		self.ch1 = tim3.channel(1, pyb.Timer.PWM, pin=pinB4)
+		## Channel 2 of Timer 3
 		self.ch2 = tim3.channel(2, pyb.Timer.PWM, pin=pinB5)
 
 		# Set duty cycle to 0.

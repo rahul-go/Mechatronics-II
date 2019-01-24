@@ -3,7 +3,14 @@
  *
  * @mainpage
  *
- * @section motor_driver Motor Driver
+ * @section sec_intro Introduction
+ * The following project was created to allow easy motor control. Two classes
+ * were developed to allow for easy interaction with the motor. The MotorDriver
+ * class allows a user to spin the motor in a given direction with a given duty
+ * cycle. The Encoder class allows a user to collect data about the motor's
+ * position, potentially to make decisions about motor control.
+ *
+ * @section sec_mot Motor Driver
  *
  * @subsection purpose Purpose
  * The MotorDriver class implements a motor driver for the ME405 board. At any
@@ -20,7 +27,7 @@
  * set_duty_cycle function was called with different duty cycles, and the
  * motor's speed and direction were qualitatively checked.
  *
- * @section encoder Encoder
+ * @section sec_enc Encoder
  *
  * @subsection purpose Purpose
  * The Encoder class enables the user to implement multiple encoders without
