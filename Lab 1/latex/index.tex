@@ -1,7 +1,9 @@
 \hypertarget{index_sec_intro}{}\section{Introduction}\label{index_sec_intro}
-The following code was made to control the duty cycle of a DC motor.\hypertarget{index_sec_mot}{}\section{Motor Driver}\label{index_sec_mot}
-The Motor Driver contains two functions, the init function and set\+\_\+duty\+\_\+cycle. The motor driver is used to make a motor object and control its duty cycle. Please see motor\+\_\+goyal\+\_\+kao\+\_\+whinnery.\+Motor\+Driver which is part of the motor package.\hypertarget{index_sec_enc}{}\section{Encoder}\label{index_sec_enc}
-The Encoder has the function \begin{DoxyAuthor}{Author}
+The following code was made to control, read position of, and reset motor(s).\hypertarget{index_sec_mot}{}\section{Motor Driver}\label{index_sec_mot}
+The Motor Driver contains two functions, the init function and set\+\_\+duty\+\_\+cycle. The motor driver is used to make a motor object and control its duty cycle. Please see motor.\+Motor which is part of the motor package.\hypertarget{index_sec_enc}{}\section{Encoder}\label{index_sec_enc}
+The Encoder contains three functions, the init, read, and zero functions. The main function of the Encoder file is to enable multiple encoder objects to be made. Each encoder should be able to return the correct position of the motor encoder when the \char`\"{}read()\char`\"{} function is called. Each encoder should also be able to zero or resets it\textquotesingle{}s position by calling the zero function. Please see \mbox{\hyperlink{classencoder_1_1_encoder}{encoder.\+Encoder}} which is part of the encoder package.
+
+\begin{DoxyAuthor}{Author}
 Harry Whinnery, Rahul Goyal, Cameron Kao
 \end{DoxyAuthor}
 \begin{DoxyCopyright}{Copyright}
