@@ -11,6 +11,8 @@
 
 import encoder
 import motor
+import pyb
+import utime
 
 ## A motor driver object
 m = motor.MotorDriver()

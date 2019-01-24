@@ -25,10 +25,12 @@ class Encoder:
     #  Detailed info on encoder driver constructor
     def __init__(self, pins, timer, channels):
         
+        print('Creating an encoder driver!')
+        
         # Set up encoder pins
         self.timer = pyb.Timer(timer, prescaler=0, period=65535)
-        self.timer.channel(channels[0], pyb.Timer.ENC_AB, pins[0])
-        self.timer.channel(channels[1], pyb.Timer.ENC_AB, pins[1]) 
+        self.timer.channel(channels[0], pyb.Timer.ENC_AB, pin = pins[0])
+        self.timer.channel(channels[1], pyb.Timer.ENC_AB, pin = pins[1]) 
         
         # Initialize position, distance, and timer counter to 0
         self.zero()
@@ -54,7 +56,6 @@ class Encoder:
     #
     #  Detailed info on encoder zero function
     def zero(self):
-
+        self.timer.counter(0);
         self.position = 0;
         self.distance = 0;
-        self.timer.counter(0);
