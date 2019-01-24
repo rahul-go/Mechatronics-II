@@ -15,11 +15,12 @@ import encoder
 import motor
 import utime
 
-print('hello')
-encoder = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
+
+encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 8, [1, 2])
 motor = motor.MotorDriver()
-controller = controller.Controller(K_P = 1, x_0 = 1, motor, encoder)
+controller = controller.Controller(30, 30, motor, encoder)
 
 while(True):
-	controller.run()
-	utime.sleep_ms(10)
+    controller.run()
+    utime.sleep_ms(500)
+    print(encoder.read())

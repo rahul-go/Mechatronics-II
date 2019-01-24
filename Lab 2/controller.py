@@ -12,6 +12,7 @@ class Controller:
         self.x_set = x_set
     def run(self):     
         self.x_act = self.encoder.read()
+        print(self.x_act)
         level = self.K_P*(self.x_act-self.x_set)
         self.motor.set_duty_cycle(level)
     
