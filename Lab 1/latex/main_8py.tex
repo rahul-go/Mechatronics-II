@@ -1,0 +1,34 @@
+\hypertarget{main_8py}{}\section{main.\+py File Reference}
+\label{main_8py}\index{main.py@{main.py}}
+
+
+The main creates a motor driver in order to control how fast the motor spins and in what direction.  
+
+
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8py_a860ea3021871d5efa8973e439a74cdd0}\label{main_8py_a860ea3021871d5efa8973e439a74cdd0}} 
+\mbox{\hyperlink{main_8py_a860ea3021871d5efa8973e439a74cdd0}{main.\+m}} = \mbox{\hyperlink{classmotor_1_1_motor_driver}{motor.\+Motor\+Driver}}()
+\begin{DoxyCompactList}\small\item\em A motor driver object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8py_af432943fbe343be68ed1ad5361669f51}\label{main_8py_af432943fbe343be68ed1ad5361669f51}} 
+\mbox{\hyperlink{main_8py_af432943fbe343be68ed1ad5361669f51}{main.\+e}} = \mbox{\hyperlink{classencoder_1_1_encoder}{encoder.\+Encoder}}(\mbox{[}pyb.\+Pin.\+board.\+P\+C6, pyb.\+Pin.\+board.\+P\+C7\mbox{]}, 8, \mbox{[}1, 2\mbox{]})
+\begin{DoxyCompactList}\small\item\em An encoder object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The main creates a motor driver in order to control how fast the motor spins and in what direction. 
+
+Main also creates an encoder in order to track where the position of the motor encoder and allows the motor position to be reset. Main will then continuously print out the position of the motor E\+V\+E\+RY T\+EN S\+E\+C\+O\+N\+DS.
+
+The Motor Driver \char`\"{}m\char`\"{} will be created passing in no parameters. This is what will be controlling both how fast the motor is running, and in what direction it will be running in. The Encoder \char`\"{}e\char`\"{} will be created passing in the pin the pin locations for the encoder accordingly, the timer correlating to the the pin locations, and the two channels correlating to the pin locations. The correct pin locations and other correlating parameters can be found in the user manual. Main will then enter an infinite loop where it will continually print the call of the \char`\"{}read()\char`\"{} function for the encoder object. This function will return the position of the motor encoder wheel, which will be a value between 0 and 65535. Main will then use the sleep function to stop the infinite while loop for 10ms.
+
+\begin{DoxyAuthor}{Author}
+Rahul Goyal, Cameron Kao, Harry Whinnery
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+License Info
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+January 24, 2019 
+\end{DoxyDate}

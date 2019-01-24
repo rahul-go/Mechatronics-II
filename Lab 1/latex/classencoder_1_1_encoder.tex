@@ -1,0 +1,83 @@
+\hypertarget{classencoder_1_1_encoder}{}\section{encoder.\+Encoder Class Reference}
+\label{classencoder_1_1_encoder}\index{encoder.Encoder@{encoder.Encoder}}
+
+
+An encoder driver object.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classencoder_1_1_encoder_a34939827412badc93f8744540676e833}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, pins, timer, channels)
+\begin{DoxyCompactList}\small\item\em Constructor for encoder driver. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}{read}} (self)
+\begin{DoxyCompactList}\small\item\em Gets the encoder\textquotesingle{}s position. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}{zero}} (self)
+\begin{DoxyCompactList}\small\item\em Zeros out the encoder. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classencoder_1_1_encoder_a8e9c3e1317abc4f6fbe95468c69223d1}\label{classencoder_1_1_encoder_a8e9c3e1317abc4f6fbe95468c69223d1}} 
+{\bfseries timer}
+\item 
+\mbox{\Hypertarget{classencoder_1_1_encoder_a9c15eb087b5869c188cf94e53ea3b4f5}\label{classencoder_1_1_encoder_a9c15eb087b5869c188cf94e53ea3b4f5}} 
+{\bfseries position}
+\item 
+\mbox{\Hypertarget{classencoder_1_1_encoder_ac16be7b70ef28d19b75108d422f82e28}\label{classencoder_1_1_encoder_ac16be7b70ef28d19b75108d422f82e28}} 
+{\bfseries distance}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An encoder driver object. 
+
+Details \begin{DoxyAuthor}{Author}
+Rahul Goyal, Cameron Kao, and Harry Whinnery 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+License Info 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+January 24, 2019 
+\end{DoxyDate}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classencoder_1_1_encoder_a34939827412badc93f8744540676e833}\label{classencoder_1_1_encoder_a34939827412badc93f8744540676e833}} 
+\index{encoder.Encoder@{encoder.Encoder}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!encoder.Encoder@{encoder.Encoder}}
+\subsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def encoder.\+Encoder.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{pins,  }\item[{}]{timer,  }\item[{}]{channels }\end{DoxyParamCaption})}
+
+
+
+Constructor for encoder driver. 
+
+The \char`\"{}\+\_\+\+\_\+init\+\_\+\+\_\+\char`\"{} constructor will be used by passing in the pin locations for the encoder accordingly, the timer correlating to the the pin locations, and the two channels correlating to the pin locations. The correct pin locations and other correlating parameters can be found in the user manual. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}\label{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}} 
+\index{encoder.Encoder@{encoder.Encoder}!read@{read}}
+\index{read@{read}!encoder.Encoder@{encoder.Encoder}}
+\subsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily def encoder.\+Encoder.\+read (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Gets the encoder\textquotesingle{}s position. 
+
+The \char`\"{}read()\char`\"{} function will be used to return the position of the motor encoder wheel using a position between 0 and 65535. \mbox{\Hypertarget{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}\label{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}} 
+\index{encoder.Encoder@{encoder.Encoder}!zero@{zero}}
+\index{zero@{zero}!encoder.Encoder@{encoder.Encoder}}
+\subsubsection{\texorpdfstring{zero()}{zero()}}
+{\footnotesize\ttfamily def encoder.\+Encoder.\+zero (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Zeros out the encoder. 
+
+The zero function makes resets the position to zero, sets the distance to zero, and sets the timer counter to zero. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{encoder_8py}{encoder.\+py}}\end{DoxyCompactItemize}

@@ -1,13 +1,24 @@
 ## @file encoder.py
-#  Brief doc for encoder.py
+#  The main function of the Encoder file is to enable multiple encoder objects
+#  to be made. Each encoder should be able to return the correct position 
+#  of the motor encoder when the "read()" function is called. Each encoder 
+#  should also be able to zero or resets it's position by calling the zero
+#  function.
 #
-#  Detailed doc for encoder.py 
+#  The Encoder class may be used to create encoder multiple encoder objects.
+#  The "__init__" function will be used by passing in the pin locations for 
+#  the encoder accordingly, the timer correlating to the the pin locations, 
+#  and the two channels correlating to the pin locations. The correct pin 
+#  locations and other correlating parameters can be found in the user manual.
+#  The "read()" function will be used to return the position of the motor 
+#  encoder wheel using a position between 0 and 65535. The "zero()" function 
+#  will cause the encoder to reset its position to 0. 
 #
 #  @author Rahul Goyal, Cameron Kao, Harry Whinnery
 #
 #  @copyright License Info
 #
-#  @date January 1, 1970
+#  @date January 24, 2019
 
 import pyb
 
@@ -16,13 +27,16 @@ import pyb
 #  Details
 #  @author Rahul Goyal, Cameron Kao, and Harry Whinnery
 #  @copyright License Info
-#  @date January 1, 1970
+#  @date January 24, 2019
 
 class Encoder:
     
     ## Constructor for encoder driver
     #
-    #  Detailed info on encoder driver constructor
+    #  The "__init__" constructor will be used by passing in the pin locations for 
+    #  the encoder accordingly, the timer correlating to the the pin locations, 
+    #  and the two channels correlating to the pin locations. The correct pin 
+    #  locations and other correlating parameters can be found in the user manual.
     def __init__(self, pins, timer, channels):
         
         print('Creating an encoder driver!')
@@ -37,7 +51,8 @@ class Encoder:
 
     ## Gets the encoder's position
     #
-    #  This method returns the current position of the encoder on the wheel of the motor.
+    # The "read()" function will be used to return the position of the motor 
+    # encoder wheel using a position between 0 and 65535.
     def read(self):
 
         prev_position = self.position
@@ -54,7 +69,7 @@ class Encoder:
 
     ## Zeros out the encoder
     #
-    #  Detailed info on encoder zero function
+    #  The zero function makes resets the position to zero, sets the distance to zero, and sets the timer counter to zero.
     def zero(self):
         self.timer.counter(0);
         self.position = 0;

@@ -1,0 +1,29 @@
+/**
+ * @file mainpage.dox
+ *
+ * @mainpage
+ *
+ * @section sec_intro Introduction
+ * The following code was made to control, read position of, and reset motor(s). 
+ *
+ * @section sec_mot Motor Driver
+ * The Motor Driver contains two functions, the init function and 
+ * set_duty_cycle. The motor driver is used to make a motor object and control 
+ * its duty cycle. Please see motor.Motor which is part of the \ref motor 
+ * package.
+ *
+ * @section sec_enc Encoder
+ * The Encoder contains three functions, the init, read, and zero functions. 
+ * The main function of the Encoder file is to enable multiple encoder objects
+ * to be made. Each encoder should be able to return the correct position 
+ * of the motor encoder when the "read()" function is called. Each encoder 
+ * should also be able to zero or resets it's position by calling the zero
+ * function. Please see encoder.Encoder which is part of the \ref encoder 
+ * package.
+ *
+ * @author Harry Whinnery, Rahul Goyal, Cameron Kao
+ *
+ * @copyright License Info
+ *
+ * @date January 24, 2019
+ */
