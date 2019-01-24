@@ -50,12 +50,16 @@ class Encoder:
 		print('Creating an encoder driver!')
 		
 		# Set up encoder pins
+		## Timer object, with the provided timer ID, prescaler=0, and
+		#  period=65535.
 		self.timer = pyb.Timer(timer, prescaler=0, period=65535)
 		self.timer.channel(channels[0], pyb.Timer.ENC_AB, pin = pins[0])
 		self.timer.channel(channels[1], pyb.Timer.ENC_AB, pin = pins[1]) 
 		
 		# Initialize position, distance, and timer counter to 0
 		self.zero()
+
+
 
 	## Gets the encoder's traveled distance.
 	#
@@ -69,23 +73,40 @@ class Encoder:
 	#  frequently for underflow/overflow to be handled properly.
 	def read(self):
 
+		## Position of the motor the last time read() was called, according to
+		#  to the timer counter.
 		prev_position = self.position
+		## Position of the motor in the current read() call, according to the 
+		#  timer counter.
 		self.position = self.timer.counter()
 		
+		## Change in position from the last read() call, according to the timer
+		#  counter.
 		delta = self.position - prev_position
 		if delta > 32767:
 			delta -= 65536
 		elif delta < -32767:
 			delta += 65536
+		## Distance traveled by the motor (in encoder ticks) relative to the
+		#  current zero. Accounts for timer counter underflow/overflow.
 		self.distance += delta
 
 		return self.distance
 
+
+
 	## Zeroes the encoder.
 	#
 	#  The zero function resets the timer counter, position of the motor, and
-	#  distance traveled by the motor.
+	#  distance traveled by the motor. If the motor hasn't moved, a subsquent
+	#  call of the read() function will return 0. All subsequent calls of the
+	#  read() function will return distance traveled (in encoder ticks)
+	#  relative to this new zero position.
 	def zero(self):
 		self.timer.counter(0);
+		## Position of the motor in the current read() call, according to the 
+		#  timer counter.
 		self.position = 0;
+		## Distance traveled by the motor (in encoder ticks) relative to the
+		#  current zero. Accounts for timer counter underflow/overflow.
 		self.distance = 0;

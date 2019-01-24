@@ -1,7 +1,5 @@
 ## @file main.py
-#  Main creates an encoder to track the distance travelled by the motor wheel.
-#  Then, it continuously prints the travelled distance of the motor ever ten
-#  milliseconds.
+#  TODO
 #
 #  @author Rahul Goyal, Cameron Kao, Harry Whinnery
 #
@@ -15,10 +13,12 @@ import encoder
 import motor
 import utime
 
-
-encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 8, [1, 2])
-motor = motor.MotorDriver()
-controller = controller.Controller(30, 30, motor, encoder)
+## A motor object
+m = motor.MotorDriver()
+## An encoder object
+e = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 8, [1, 2])
+## A controller object
+c = controller.Controller(m, e, 30, 30)
 
 while(True):
     controller.run()

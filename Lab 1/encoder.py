@@ -104,5 +104,9 @@ class Encoder:
 	#  relative to this new zero position.
 	def zero(self):
 		self.timer.counter(0);
+		## Position of the motor in the current read() call, according to the 
+		#  timer counter.
 		self.position = 0;
+		## Distance traveled by the motor (in encoder ticks) relative to the
+		#  current zero. Accounts for timer counter underflow/overflow.
 		self.distance = 0;
