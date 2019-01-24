@@ -1,15 +1,6 @@
 ## @file encoder.py
 #  The encoder module contains the Encoder class.
 #
-#  The Encoder class may be used to create encoder multiple encoder objects.
-#  The "__init__" function will be used by passing in the pin locations for 
-#  the encoder accordingly, the timer correlating to the the pin locations, 
-#  and the two channels correlating to the pin locations. The correct pin 
-#  locations and other correlating parameters can be found in the user manual.
-#  The "read()" function will be used to return the position of the motor 
-#  encoder wheel using a position between 0 and 65535. The "zero()" function 
-#  will cause the encoder to reset its position to 0.
-#
 #  @author Rahul Goyal, Cameron Kao, Harry Whinnery
 #
 #  @copyright License Info
@@ -22,7 +13,8 @@ import pyb
 #
 #  The Encoder class enables the user to implement multiple encoders without
 #  needing to rewrite code for each one. All encoders can run and be read from
-#  independently. All encoders can be zeroed independently.
+#  independently. All encoders can be zeroed independently. The class also
+#  attempts to handle timer counter underflow/overflow errors.
 #  @author Rahul Goyal, Cameron Kao, and Harry Whinnery
 #  @copyright License Info
 #  @date January 24, 2019
