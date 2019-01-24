@@ -3,25 +3,32 @@
  *
  * @mainpage
  *
- * @section sec_intro Introduction
- * The following code was made to control, read position of, and reset motor(s). 
+ * @section purpose Purpose
+ * The Encoder class enables the user to implement multiple encoders without
+ * needing to rewrite code for each one. All encoders can run and be read from
+ * independently.
  *
- * @section sec_mot Motor Driver
- * The Motor Driver contains two functions, the init function and 
- * set_duty_cycle. The motor driver is used to make a motor object and control 
- * its duty cycle. Please see motor.Motor which is part of the \ref motor 
- * package.
+ * @section usage Usage
+ * An Encoder object is constructed by providing the pin objects, timer ID, and
+ * timer channels corresponding to the pins to which the physical encoder is
+ * attached. Best results occur when the read() function is called often. The
+ * encoder can be zeroed at any position chosen by the user. Please see
+ * encoder.Encoder which is part of the \ref encoder package.
+ * 
+ * @section testing Testing
+ * The Encoder class was tested manually with a physical encoder. The read()
+ * function was called at a high frequency (100 Hz).
+ * 
+ * @section bugs_and_limitations Bugs and Limitations
+ * The Encoder class handles timer counter underflow/overflow correctly only
+ * when the read() function is called at a high enough frequency, determined as
+ * a function of the speed at which the motor spins. Best results are produced
+ * when the read() function is called as frequently as reasonable.
  *
- * @section sec_enc Encoder
- * The Encoder contains three functions, the init, read, and zero functions. 
- * The main function of the Encoder file is to enable multiple encoder objects
- * to be made. Each encoder should be able to return the correct position 
- * of the motor encoder when the "read()" function is called. Each encoder 
- * should also be able to zero or resets it's position by calling the zero
- * function. Please see encoder.Encoder which is part of the \ref encoder 
- * package.
+ * @section location Location
+ * https://github.com/rahul-go/Mechatronics-LAB/tree/master/Lab%201
  *
- * @author Harry Whinnery, Rahul Goyal, Cameron Kao
+ * @author Rahul Goyal, Cameron Kao, Harry Whinnery
  *
  * @copyright License Info
  *
