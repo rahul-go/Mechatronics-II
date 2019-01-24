@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: Main Page</title>
+<title>Goyal Kao Whinnery Lab 1: Main Page</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">My Project
+   <div id="projectname">Goyal Kao Whinnery Lab 1
    </div>
   </td>
  </tr>
@@ -62,20 +62,33 @@ $(function() {
 
 <div class="header">
   <div class="headertitle">
-<div class="title">My Project Documentation</div>  </div>
+<div class="title">Goyal Kao Whinnery Lab 1 Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="purpose"></a>
-Purpose</h1>
+<div class="textblock"><h1><a class="anchor" id="motor_driver"></a>
+Motor Driver</h1>
+<h2><a class="anchor" id="purpose"></a>
+Purpose</h2>
+<p>The MotorDriver class implements a motor driver for the ME405 board. At any point while the motor is running, the user can use this class to modify the duty cycle of the signal and the motor will react appropriately.</p>
+<h2><a class="anchor" id="usage"></a>
+Usage</h2>
+<p>A MotorDriver object is constructed without parameters. The duty cycle is initially set to 0. The duty cycle can then be mofified by calling the set_duty_cycle() function, passing the desired duty cycle as a parameter.</p>
+<h2><a class="anchor" id="testing"></a>
+Testing</h2>
+<p>The MotorDriver class was tested manually with a physical motor. The set_duty_cycle function was called with different duty cycles, and the motor's speed and direction were qualitatively checked.</p>
+<h1><a class="anchor" id="encoder"></a>
+Encoder</h1>
+<h2><a class="anchor" id="purpose"></a>
+Purpose</h2>
 <p>The Encoder class enables the user to implement multiple encoders without needing to rewrite code for each one. All encoders can run and be read from independently. All encoders can be zeroed independently.</p>
-<h1><a class="anchor" id="usage"></a>
-Usage</h1>
-<p>An Encoder object is constructed by providing the pin objects, timer ID, and timer channels corresponding to the pins to which the physical encoder is attached. Best results occur when the read() function is called often. The encoder can be zeroed at any position chosen by the user. Please see <a class="el" href="classencoder_1_1_encoder.html" title="An encoder driver object. ">encoder.Encoder</a> which is part of the encoder package.</p>
-<h1><a class="anchor" id="testing"></a>
-Testing</h1>
+<h2><a class="anchor" id="usage"></a>
+Usage</h2>
+<p>An Encoder object is constructed by providing the pin objects, timer ID, and timer channels corresponding to the pins to which the physical encoder is attached. Best results occur when the read() function is called often. The encoder can be zeroed at any position chosen by the user. Please see <a class="el" href="classencoder_1_1_encoder.html" title="An encoder driver object. ">encoder.Encoder</a> which is part of the <a class="el" href="index.html#encoder">Encoder</a> package.</p>
+<h2><a class="anchor" id="testing"></a>
+Testing</h2>
 <p>The Encoder class was tested manually with a physical encoder. The read() function was called at a high frequency (100 Hz).</p>
-<h1><a class="anchor" id="bugs_and_limitations"></a>
-Bugs and Limitations</h1>
+<h2><a class="anchor" id="bugs_and_limitations"></a>
+Bugs and Limitations</h2>
 <p>The Encoder class handles timer counter underflow/overflow correctly only when the read() function is called at a high enough frequency, determined as a function of the speed at which the motor spins. Best results are produced when the read() function is called as frequently as reasonable.</p>
 <h1><a class="anchor" id="location"></a>
 Location</h1>

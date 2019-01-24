@@ -7,15 +7,19 @@
 #
 #  @copyright License Info
 #
-#  @date January 24, 2019
+#  @date January 31, 2019
 
-import encoder
 import pyb
+import controller
+import encoder
+import motor
 import utime
 
-## An encoder object
-e = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
+print('hello')
+encoder = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
+motor = motor.MotorDriver()
+controller = controller.Controller(K_P = 1, x_0 = 1, motor, encoder)
 
 while(True):
-	print(e.read())
+	controller.run()
 	utime.sleep_ms(10)
