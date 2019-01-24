@@ -30,7 +30,7 @@ import pyb
 #  @date January 24, 2019
 class Encoder:
     
-    ## Constructor for encoder driver
+    ## Constructor for the encoder driver.
     #
     #  The constructor is called by passing the pin objects (as a list)
     #  corresponding to the encoder, the corresponding timer ID, and the
@@ -39,15 +39,17 @@ class Encoder:
     #  Corresponding pins, timers, and channels can be found in the user
     #  manual of the microcontroller.
     #      
-    #  @param pins Pin objects for the encoder are passed through this parameter
-    #  in order to specify which pins are reading the encoder.
+    #  @param pins Pin objects for the encoder are passed as a list to specify
+    #  the pins to which the physical encoder is attached.
     #
-    #  @param timer Timer object correlates to the pins being used. Which timer
-    #  to use can be found using the user manual.
+    #  @param timer Timer ID that corresponds to the pins being used. Refer to
+    #  the user manual of the microcontroller to determine the correct timer
+    #  ID.
     #
-    #  @param channels Channels object correlates to the pins being used for the
-    #  encoder as well, and can also be found in the user manual.
-    #
+    #  @param channels Channels that correspond to the pins.  The channels
+    #  should be passed with with respect to the order in which the pins
+    #  objects were passed. Refer to the user manual of the microcontroller to
+    #  to determined the correct channel for each pin.
     def __init__(self, pins, timer, channels):
         
         print('Creating an encoder driver!')
@@ -60,7 +62,7 @@ class Encoder:
         # Initialize position, distance, and timer counter to 0
         self.zero()
 
-    ## Gets the encoder's position
+    ## Gets the encoder's traveled distance.
     #
     #  The "read()" function is used to return the distance traveled by the
     #  motor in terms of encoder ticks. The function handles underflow and
@@ -84,7 +86,7 @@ class Encoder:
 
         return self.distance
 
-    ## Zeros out the encoder
+    ## Zeros the encoder.
     #
     #  The zero function resets the timer counter, position of the motor, and
     #  distance traveled by the motor.
