@@ -51,6 +51,7 @@ class MotorDriver:
 		self.set_duty_cycle(0)
 
 
+
 	## Sets duty cycle for motor
 	#
 	#  This method sets the duty cycle to be sent

@@ -59,6 +59,8 @@ class Encoder:
 		# Initialize position, distance, and timer counter to 0
 		self.zero()
 
+
+
 	## Gets the encoder's traveled distance.
 	#
 	#  The "read()" function is used to return the distance traveled by the
@@ -90,6 +92,8 @@ class Encoder:
 		self.distance += delta
 
 		return self.distance
+
+
 
 	## Zeroes the encoder.
 	#
