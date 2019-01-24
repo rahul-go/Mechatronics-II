@@ -1,9 +1,5 @@
 ## @file encoder.py
-#  The main function of the Encoder file is to enable multiple encoder objects
-#  to be made. Each encoder should be able to return the correct position 
-#  of the motor encoder when the "read()" function is called. Each encoder 
-#  should also be able to zero or resets it's position by calling the zero
-#  function.
+#  The encoder module contains the Encoder class.
 #
 #  The Encoder class may be used to create encoder multiple encoder objects.
 #  The "__init__" function will be used by passing in the pin locations for 
@@ -24,7 +20,9 @@ import pyb
 
 ## An encoder driver object.
 #
-#  Details
+#  The Encoder class enables the user to implement multiple encoders without
+#  needing to rewrite code for each one. All encoders can run and be read from
+#  independently. All encoders can be zeroed independently.
 #  @author Rahul Goyal, Cameron Kao, and Harry Whinnery
 #  @copyright License Info
 #  @date January 24, 2019

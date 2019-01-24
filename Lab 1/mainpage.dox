@@ -6,7 +6,7 @@
  * @section purpose Purpose
  * The Encoder class enables the user to implement multiple encoders without
  * needing to rewrite code for each one. All encoders can run and be read from
- * independently.
+ * independently. All encoders can be zeroed independently.
  *
  * @section usage Usage
  * An Encoder object is constructed by providing the pin objects, timer ID, and
