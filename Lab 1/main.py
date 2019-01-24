@@ -2,8 +2,8 @@
 #  The main creates a motor driver in order to control how fast the motor spins
 #  and in what direction. Main also creates an encoder in order to track where
 #  the position of the motor encoder and allows the motor position to be reset.
-#  Main will then continuously print out the position of the motor EVERY TEN 
-#  SECONDS.
+#  Main will then continuously print out the position of the motor every ten
+#  seconds.
 #
 #  The Motor Driver "m" will be created passing in no parameters. This is what
 #  will be controlling both how fast the motor is running, and in what direction

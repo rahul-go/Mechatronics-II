@@ -37,6 +37,16 @@ class Encoder:
     #  the encoder accordingly, the timer correlating to the the pin locations, 
     #  and the two channels correlating to the pin locations. The correct pin 
     #  locations and other correlating parameters can be found in the user manual.
+    #      
+    #  @param pins Pin objects for the encoder are passed through this parameter
+    #  in order to specify which pins are reading the encoder.
+    #
+    #  @param timer Timer object correlates to the pins being used. Which timer
+    #  to use can be found using the user manual.
+    #
+    #  @param channels Channels object correlates to the pins being used for the
+    #  encoder as well, and can also be found in the user manual.
+    #
     def __init__(self, pins, timer, channels):
         
         print('Creating an encoder driver!')
