@@ -24,12 +24,9 @@
 #  @date January 24, 2019
 
 import encoder
-import motor
 import pyb
 import utime
 
-## A motor driver object
-m = motor.MotorDriver()
 ## An encoder object
 e = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
 
