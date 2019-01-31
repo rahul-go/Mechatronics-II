@@ -53,7 +53,7 @@ class Controller:
 		self.time = [t - self.time[0] for t in self.time]
 		data = zip(self.time, self.vals)
 		for datum in data:
-			print(datum)
+			print(str(datum[0]) + ', ' + str(datum[1]))
 
 
 
