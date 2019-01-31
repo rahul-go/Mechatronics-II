@@ -1,0 +1,86 @@
+\hypertarget{classmotor_1_1_motor_driver}{}\section{motor.\+Motor\+Driver Class Reference}
+\label{classmotor_1_1_motor_driver}\index{motor.MotorDriver@{motor.MotorDriver}}
+
+
+A motor driver object.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmotor_1_1_motor_driver_a21feb0e2236f52901780b84a989008d1}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, pins, timer, channels)
+\begin{DoxyCompactList}\small\item\em Constructor for motor driver. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classmotor_1_1_motor_driver_a51b4721406aa66e0807413199b8b700f}{set\+\_\+duty\+\_\+cycle}} (self, level)
+\begin{DoxyCompactList}\small\item\em Sets duty cycle for motor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmotor_1_1_motor_driver_ab59ff180f9593d716a60d0177cd8564e}\label{classmotor_1_1_motor_driver_ab59ff180f9593d716a60d0177cd8564e}} 
+\mbox{\hyperlink{classmotor_1_1_motor_driver_ab59ff180f9593d716a60d0177cd8564e}{ch1}}
+\begin{DoxyCompactList}\small\item\em Channel 1 of Timer 3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classmotor_1_1_motor_driver_af47581f527f4163d62810c617e081001}\label{classmotor_1_1_motor_driver_af47581f527f4163d62810c617e081001}} 
+\mbox{\hyperlink{classmotor_1_1_motor_driver_af47581f527f4163d62810c617e081001}{ch2}}
+\begin{DoxyCompactList}\small\item\em Channel 2 of Timer 3. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A motor driver object. 
+
+The \mbox{\hyperlink{classmotor_1_1_motor_driver}{Motor\+Driver}} class implements a motor driver for the M\+E405 board. At any point while the motor is running, the user can use this class to modify the duty cycle of the signal and the motor will react appropriately. \begin{DoxyAuthor}{Author}
+Rahul Goyal, Cameron Kao, Harry Whinnery 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+License Info 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+January 24, 2019 
+\end{DoxyDate}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmotor_1_1_motor_driver_a21feb0e2236f52901780b84a989008d1}\label{classmotor_1_1_motor_driver_a21feb0e2236f52901780b84a989008d1}} 
+\index{motor.MotorDriver@{motor.MotorDriver}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!motor.MotorDriver@{motor.MotorDriver}}
+\subsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def motor.\+Motor\+Driver.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{pins,  }\item[{}]{timer,  }\item[{}]{channels }\end{DoxyParamCaption})}
+
+
+
+Constructor for motor driver. 
+
+Creates a motor driver by initializing G\+P\+IO pins and turning the motor off for safety. The constructor is called by passing the pin objects (as a list) corresponding to the motor, the corresponding timer ID, and the corresponding channels (as a list). The channels should be passed with respect to the order in which the pins objects were passed. Corresponding pins, timers, and channels can be found in the user manual of the microcontroller.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pins} & Pin objects for the motor are passed as a list to specify the pins to which the physical motor is attached. The first pin object in the list corresponds to the first input pin, the second pin object corresponds to the second input pin, and the third pin object correspond to the enable pin.\\
+\hline
+{\em timer} & Timer ID that corresponds to the pins being used. Refer to the user manual of the microcontroller to determine the correct timer ID.\\
+\hline
+{\em channels} & Channels that correspond to the pins. The first channel in the list corresponds to the first input pin, and the second channel corresponds to the second input pin. Refer to the user manual of the microcontroller to determined the correct channel for each pin. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmotor_1_1_motor_driver_a51b4721406aa66e0807413199b8b700f}\label{classmotor_1_1_motor_driver_a51b4721406aa66e0807413199b8b700f}} 
+\index{motor.MotorDriver@{motor.MotorDriver}!set\_duty\_cycle@{set\_duty\_cycle}}
+\index{set\_duty\_cycle@{set\_duty\_cycle}!motor.MotorDriver@{motor.MotorDriver}}
+\subsubsection{\texorpdfstring{set\_duty\_cycle()}{set\_duty\_cycle()}}
+{\footnotesize\ttfamily def motor.\+Motor\+Driver.\+set\+\_\+duty\+\_\+cycle (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{level }\end{DoxyParamCaption})}
+
+
+
+Sets duty cycle for motor. 
+
+This method sets the duty cycle to be sent to the motor to the given level. Positive values cause torque in one direction, negative values in the opposite direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em level} & A signed integer holding the duty cycle of the voltage sent to the motor. Input a number between -\/100 and 100. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{motor_8py}{motor.\+py}}\end{DoxyCompactItemize}
