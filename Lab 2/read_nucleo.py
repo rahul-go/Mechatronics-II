@@ -16,19 +16,19 @@ port = 'COM4'
 
 
 
-with serial.Serial(port) as rahul:
+with serial.Serial(port) as ser:
 	# RESET AND RUN
 	# Ctrl + C
-	rahul.write(b'\x03')
+	ser.write(b'\x03')
 	# Ctrl + D
-	rahul.write(b'\x04')
+	ser.write(b'\x04')
 	# Carriage Return
-	rahul.write(b'\x0D')
+	ser.write(b'\x0D')
 
 	# READ AND PARSE
 	time.sleep(4)
 	
-	lines = rahul.read_all().decode().splitlines()
+	lines = ser.read_all().decode().splitlines()
 
 	# Parse data
 	data = []
