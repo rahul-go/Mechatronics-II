@@ -39,5 +39,3 @@ class BusyTask:
 		while True:
 			print_task.put ('[' + str (self.ser_num) + ']')
 			yield (0)
-
-

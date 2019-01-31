@@ -286,4 +286,3 @@ class Share:
 		string. """
 
 		return ('{:<12s} Share'.format (self._name))
-

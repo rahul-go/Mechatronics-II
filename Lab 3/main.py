@@ -125,4 +125,3 @@ if __name__ == "__main__":
 	print (task_share.show_all ())
 	print (task1.get_trace ())
 	print ('\r\n')
-
