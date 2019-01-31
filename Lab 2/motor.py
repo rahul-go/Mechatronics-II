@@ -28,24 +28,41 @@ class MotorDriver:
 	
 	## Constructor for motor driver
 	#
-	# Creates a motor driver by initializing GPIO
-	# pins and turning the motor off for safety.
-	def __init__(self):
+	#  Creates a motor driver by initializing GPIO pins and turning the motor
+	#  off for safety. The constructor is called by passing the pin objects (as
+	#  a list) corresponding to the motor, the corresponding timer ID, and the
+	#  corresponding channels (as a list). The channels should be passed with
+	#  respect to the order in which the pins objects were passed.
+	#  Corresponding pins, timers, and channels can be found in the user manual
+	#  of the microcontroller.
+	#      
+	#  @param pins Pin objects for the motor are passed as a list to specify
+	#  the pins to which the physical motor is attached. The first pin object
+	#  in the list corresponds to the first input pin, the second pin object 
+	#  corresponds to the second input pin, and the third pin object
+	#  correspond to the enable pin.
+	#
+	#  @param timer Timer ID that corresponds to the pins being used. Refer to
+	#  the user manual of the microcontroller to determine the correct timer
+	#  ID.
+	#
+	#  @param channels Channels that correspond to the pins. The first channel
+	#  in the list corresponds to the first input pin, and the second channel
+	#  corresponds to the second input pin. Refer to the user manual of the
+	#  microcontroller to determined the correct channel for each pin.
+	def __init__(self, pins, timer, channel):
 
 		print('Creating a motor driver!')
 		
-		# Set pins to output
-		pinA10 = pyb.Pin(pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
-		pinA10.high()            
-		pinB4 = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
-		pinB5 = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
+		# TODO
+		pins[2].high()
 		
 		# Set up timer and channels for PWM
-		tim3 = pyb.Timer(3, freq=20000)
+		tim = pyb.Timer(timer, freq=20000)
 		## Channel 1 of Timer 3
-		self.ch1 = tim3.channel(1, pyb.Timer.PWM, pin=pinB4)
+		self.ch1 = tim.channel(channels[0], pyb.Timer.PWM, pin=pins[0])
 		## Channel 2 of Timer 3
-		self.ch2 = tim3.channel(2, pyb.Timer.PWM, pin=pinB5)
+		self.ch2 = tim.channel(channels[1], pyb.Timer.PWM, pin=pins[1])
 
 		# Set duty cycle to 0.
 		self.set_duty_cycle(0)

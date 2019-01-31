@@ -30,9 +30,9 @@ class Encoder:
 	#  The constructor is called by passing the pin objects (as a list)
 	#  corresponding to the encoder, the corresponding timer ID, and the
 	#  corresponding channels (as a list). The channels should be passed with
-	#  with respect to the order in which the pins objects were passed.
-	#  Corresponding pins, timers, and channels can be found in the user
-	#  manual of the microcontroller.
+	#  respect to the order in which the pins objects were passed.
+	#  Corresponding pins, timers, and channels can be found in the user manual
+	#  of the microcontroller.
 	#      
 	#  @param pins Pin objects for the encoder are passed as a list to specify
 	#  the pins to which the physical encoder is attached.
@@ -41,7 +41,7 @@ class Encoder:
 	#  the user manual of the microcontroller to determine the correct timer
 	#  ID.
 	#
-	#  @param channels Channels that correspond to the pins.  The channels
+	#  @param channels Channels that correspond to the pins. The channels
 	#  should be passed with with respect to the order in which the pins
 	#  objects were passed. Refer to the user manual of the microcontroller to
 	#  to determined the correct channel for each pin.

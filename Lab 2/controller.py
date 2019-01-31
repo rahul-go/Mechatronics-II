@@ -36,13 +36,13 @@ class Controller:
 	## TODO
 	#
 	#  TODO
-	def run(self, location):
-		level = self.K_P * (self.location - self.setpoint)
-		if level > 100:
+	def run(self, measurement):
+		actuation = self.K_P * (measurement - self.setpoint)
+		if actuation > 100:
 			return 100
-		elif level < -100: 
+		elif actuation < -100: 
 			return -100
-		return level
+		return actuation
 
 
 
@@ -58,6 +58,6 @@ class Controller:
 	## TODO
 	#
 	#  TODO
-	def set_xset(self, setpoint):
+	def set_setpoint(self, setpoint):
 		## TODO
 		self.setpoint = setpoint
