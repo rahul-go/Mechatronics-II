@@ -7,10 +7,10 @@
 #
 #  @date January 31, 2019
 
-import pyb
 import controller
 import encoder
 import motor
+import pyb
 import utime
 
 
@@ -25,15 +25,20 @@ encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 ## A controller object
 controller = controller.Controller(.05, 30)
 
+
+
 # while(True):
 # 	motor.set_duty_cycle(controller.run(encoder.read()))
 # 	utime.sleep_ms(10)
 
+
+
 while(True):
 	controller.clear_data()
 	input('Press "enter" to run a step response test!')
+	encoder.zero()
 	controller.set_setpoint(encoder.read() + 4000)
-	stop = utime.ticks_add(utime.ticks_ms(), 5000)
+	stop = utime.ticks_add(utime.ticks_ms(), 1000)
 	while(utime.ticks_diff(stop, utime.ticks_ms()) > 0):
 		motor.set_duty_cycle(controller.run(encoder.read()))
 		utime.sleep_ms(10)

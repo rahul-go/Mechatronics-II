@@ -63,7 +63,6 @@ class Controller:
 	def run(self, measurement):
 		self.time.append(utime.ticks_ms())
 		self.vals.append(measurement)
-		print(measurement)
 
 		actuation = self.K_p * (self.setpoint - measurement)
 		if actuation > 100:

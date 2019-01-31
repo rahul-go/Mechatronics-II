@@ -81,7 +81,7 @@ class MotorDriver:
 	#  Input a number between -100 and 100.
 	def set_duty_cycle(self, level):
 		
-		print('Setting duty cycle to ' + str(level) + '!')
+		# print('Setting duty cycle to ' + str(level) + '!')
 
 		if level > 0:
 			self.ch1.pulse_width_percent(level)
