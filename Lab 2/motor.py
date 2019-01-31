@@ -50,7 +50,7 @@ class MotorDriver:
 	#  in the list corresponds to the first input pin, and the second channel
 	#  corresponds to the second input pin. Refer to the user manual of the
 	#  microcontroller to determined the correct channel for each pin.
-	def __init__(self, pins, timer, channel):
+	def __init__(self, pins, timer, channels):
 
 		print('Creating a motor driver!')
 		

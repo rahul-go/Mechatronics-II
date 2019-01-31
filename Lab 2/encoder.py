@@ -53,8 +53,8 @@ class Encoder:
 		## Timer object, with the provided timer ID, prescaler=0, and
 		#  period=65535.
 		self.timer = pyb.Timer(timer, prescaler=0, period=65535)
-		self.timer.channel(channels[0], pyb.Timer.ENC_AB, pin = pins[0])
-		self.timer.channel(channels[1], pyb.Timer.ENC_AB, pin = pins[1]) 
+		self.timer.channel(channels[0], pyb.Timer.ENC_AB, pin=pins[0])
+		self.timer.channel(channels[1], pyb.Timer.ENC_AB, pin=pins[1]) 
 		
 		# Initialize position, distance, and timer counter to 0
 		self.zero()

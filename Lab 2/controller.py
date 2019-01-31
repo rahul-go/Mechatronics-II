@@ -9,7 +9,7 @@
 #
 #  @date January 31, 2019
 
-
+import utime
 
 ## A controller object.
 #
@@ -30,6 +30,30 @@ class Controller:
 		print('Creating a controller!')
 		self.K_p = K_p
 		self.setpoint = setpoint
+		self.time = []
+		self.vals = []
+
+
+
+	## TODO
+	#
+	#  TODO
+	def clear_data(self):
+		self.time = []
+		self.vals = []
+
+
+
+	## TODO
+	#
+	#  TODO
+	def get_data(self):
+		t_0 = self.time[0]
+		for t in self.time:
+			t -= t_0
+		data = zip(self.time, self.vals)
+		for datum in data:
+			print(datum)
 
 
 
@@ -37,10 +61,14 @@ class Controller:
 	#
 	#  TODO
 	def run(self, measurement):
-		actuation = self.K_P * (measurement - self.setpoint)
+		self.time.append(utime.ticks_ms())
+		self.vals.append(measurement)
+		print(measurement)
+
+		actuation = self.K_p * (self.setpoint - measurement)
 		if actuation > 100:
 			return 100
-		elif actuation < -100: 
+		elif actuation < -100:
 			return -100
 		return actuation
 
