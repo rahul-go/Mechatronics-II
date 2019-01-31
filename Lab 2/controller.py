@@ -39,7 +39,7 @@ class Controller:
 	#
 	#  @param setpoint Initial sepoint for controller. Determines where the 
     # controller will try to go when the run function is called. 
-	def __init__(self, K_p, setpoint):
+	def __init__(self, K_p=1, setpoint=0):
 		print('Creating a controller!')
 		
         ## Creates instance variables for K_p, setpoint, time and vals. Data 
@@ -76,7 +76,7 @@ class Controller:
         data = zip(self.time, self.vals)
         # Prints each value in the data list to the console.
 		for datum in data:
-			print(datum)
+			print(str(datum[0]) + ', ' + str(datum[1]))
 
 
 

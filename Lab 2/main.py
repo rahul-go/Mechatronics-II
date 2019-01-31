@@ -23,7 +23,7 @@ motor = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
 ## An encoder object
 encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 ## A controller object
-controller = controller.Controller(.05, 30)
+controller = controller.Controller(K_p=0.10)
 
 
 
