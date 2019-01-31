@@ -27,7 +27,6 @@ with serial.Serial(port) as rahul:
 
 	# READ AND PARSE
 	time.sleep(4)
-	# print(rahul.read_all())
 	
 	lines = rahul.read_all().decode().splitlines()
 
@@ -45,6 +44,8 @@ with serial.Serial(port) as rahul:
 
 # Plot data (time: first column of data, position: second column of data)
 pyplot.plot([point[0] for point in data], [point[1] for point in data])
-pyplot.title('Lab 2: In Control')				# Title
+# Title
+pyplot.title('Lab 2: In Control, K_p = 0.10')
 pyplot.xlabel('Time (milliseconds)')			# x-Axis
 pyplot.ylabel('Position (encoder ticks)')		# y-Axis
+pyplot.xlim([0, 500])

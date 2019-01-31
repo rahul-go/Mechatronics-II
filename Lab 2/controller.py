@@ -26,7 +26,7 @@ class Controller:
 	#  @param K_p TODO
 	#
 	#  @param setpoint TODO
-	def __init__(self, K_p, setpoint):
+	def __init__(self, K_p=1, setpoint=0):
 		print('Creating a controller!')
 		self.K_p = K_p
 		self.setpoint = setpoint
