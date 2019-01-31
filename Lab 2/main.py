@@ -23,5 +23,5 @@ e = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 8, [1, 2])
 c = controller.Controller(m, e, 30, 30)
 
 while(True):
-    motor.set_duty_cycle(controller.run(encoder.read()))
-    utime.sleep_ms(50)
+	motor.set_duty_cycle(controller.run(encoder.read()))
+	utime.sleep_ms(50)

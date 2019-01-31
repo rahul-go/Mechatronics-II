@@ -25,24 +25,24 @@ class Controller:
 	#      
 	#  @param K_p TODO
 	#
-	#  @param x_set TODO
-	def __init__(self, K_p, x_set):
+	#  @param setpoint TODO
+	def __init__(self, K_p, setpoint):
 		print('Creating a controller!')
 		self.K_p = K_p
-		self.x_set = x_set
+		self.setpoint = setpoint
 
 
 
 	## TODO
 	#
 	#  TODO
-	def run(self):
-		level = self.K_P * (self.x_act - self.x_set)
+	def run(self, location):
+		level = self.K_P * (self.location - self.setpoint)
 		if level > 100:
-            return 100
-        elif level < -100: 
-            return -100
-        return level
+			return 100
+		elif level < -100: 
+			return -100
+		return level
 
 
 
@@ -58,6 +58,6 @@ class Controller:
 	## TODO
 	#
 	#  TODO
-	def set_xset(self, x_set):
+	def set_xset(self, setpoint):
 		## TODO
-		self.x_set = x_set
+		self.setpoint = setpoint
