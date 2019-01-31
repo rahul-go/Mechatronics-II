@@ -72,9 +72,9 @@ class Controller:
         #  data begins at 0
         self.time = [t - self.time[0] for t in self.time]
 		## Combines time and value lists into a list of lists, where each list 
-        # contains the time and corresponding value
+        #  contains the time and corresponding value
         data = zip(self.time, self.vals)
-        # Prints each value in the data list to the console.
+        #  Prints each value in the data list to the console.
 		for datum in data:
 			print(str(datum[0]) + ', ' + str(datum[1]))
 
@@ -88,10 +88,17 @@ class Controller:
 	def run(self, measurement):
 		
         ## Adds the current time, as read by utime.ticks_ms() to the end of the 
-        # time list
+        #  time list
         self.time.append(utime.ticks_ms())
+		
+		## Adds the current measurement to the end of the vals list
 		self.vals.append(measurement)
 
+        ## The actuaion value is the difference between the setpoint and 
+        #  measurement values multiplied by the K_p value. If this value is 
+        #  greater than 100, it is set to 100. If it is less than -100 it is 
+        #  set to -100. This saturation prevents the controller from returning
+        #  an actuation value that is too extreme.
 		actuation = self.K_p * (self.setpoint - measurement)
 		if actuation > 100:
 			return 100
@@ -101,18 +108,14 @@ class Controller:
 
 
 
-	## TODO
-	#
-	#  TODO
+	## The "set_Kp()" function sets the proportional gain value, K_p
 	def set_Kp(self, K_p):
-		## TODO
+		## Sets the instance variable of K_p to the function input
 		self.K_p = K_p
 
 
 
-	## TODO
-	#
-	#  TODO
+	## The "set_setpoint()" function sets the setpoint value
 	def set_setpoint(self, setpoint):
-		## TODO
+		## Sets the instance variable of setpoint to the function input
 		self.setpoint = setpoint
