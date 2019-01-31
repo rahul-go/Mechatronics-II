@@ -11,7 +11,6 @@ import pyb
 import controller
 import encoder
 import motor
-# import time		# TODO delete me!
 import utime
 
 
@@ -24,7 +23,7 @@ motor = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
 ## An encoder object
 encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 ## A controller object
-controller = controller.Controller(0.05, 30)
+controller = controller.Controller(.05, 30)
 
 # while(True):
 # 	motor.set_duty_cycle(controller.run(encoder.read()))
@@ -33,6 +32,7 @@ controller = controller.Controller(0.05, 30)
 while(True):
 	controller.clear_data()
 	input('Press "enter" to run a step response test!')
+	controller.set_setpoint(encoder.read() + 4000)
 	stop = utime.ticks_add(utime.ticks_ms(), 5000)
 	while(utime.ticks_diff(stop, utime.ticks_ms()) > 0):
 		motor.set_duty_cycle(controller.run(encoder.read()))

@@ -49,8 +49,8 @@ class Controller:
 	#  TODO
 	def get_data(self):
 		t_0 = self.time[0]
-		for t in self.time:
-			t -= t_0
+		
+		self.time = [t - self.time[0] for t in self.time]
 		data = zip(self.time, self.vals)
 		for datum in data:
 			print(datum)
