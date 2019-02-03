@@ -26,6 +26,7 @@ encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 controller = controller.Controller(K_p=0.10)
 
 
+
 # # Positioner
 # while(True):
 # 	motor.set_duty_cycle(controller.run(encoder.read()))
@@ -37,8 +38,8 @@ controller = controller.Controller(K_p=0.10)
 while(True):
 	controller.clear_data()
 	input('Press "enter" to run a step response test!')
+	controller.set_setpoint(4000)
 	encoder.zero()
-	controller.set_setpoint(encoder.read() + 4000)
 	stop = utime.ticks_add(utime.ticks_ms(), 1000)
 	while(utime.ticks_diff(stop, utime.ticks_ms()) > 0):
 		motor.set_duty_cycle(controller.run(encoder.read()))

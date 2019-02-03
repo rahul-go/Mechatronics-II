@@ -7,18 +7,18 @@
 #
 #  @date February 07, 2019
 
-import micropython
 import pyb
-import utime
+import micropython
 
-import controller
-import encoder
 import motor
+import encoder
+import controller
+import motorcontroller
 
-import busy_task
 import cotask
-import print_task
 import task_share
+import print_task
+import busy_task
 
 
 
@@ -37,20 +37,13 @@ motor1 = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
 encoder1 = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 ## A controller object
 controller1 = controller.Controller(K_p=0.10)
+## A motor controller object
+motorcontroller1 = motorcontroller.MotorController(motor1, encoder1, controller1)
 
 def motor1_fun():
 	# Step response
-	while(True):
-		controller1.clear_data()
-		input('Press "enter" to run a step response test!')
-		encoder1.zero()
-		controller1.set_setpoint(encoder1.read() + 4000)
-		stop = utime.ticks_add(utime.ticks_ms(), 1000)
-	while(utime.ticks_diff(stop, utime.ticks_ms()) > 0):
-		motor1.set_duty_cycle(controller1.run(encoder1.read()))
-		utime.sleep_ms(10)
-	motor1.set_duty_cycle(0)
-	controller1.get_data()
+	input('Press "enter" to run a step response test!')
+	motorcontroller1.step_response();
 
 
 
