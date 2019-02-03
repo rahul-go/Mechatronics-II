@@ -26,24 +26,27 @@ import busy_task
 # generate useful diagnostic printouts
 micropython.alloc_emergency_exception_buf (100)
 
-
-
-## A motor object
-pinENA = pyb.Pin(pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
-pinIN1A = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
-pinIN2A = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
-motor1 = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
-## An encoder object
-encoder1 = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
-## A controller object
-controller1 = controller.Controller(K_p=0.10)
-## A motor controller object
-motorcontroller1 = motorcontroller.MotorController(motor1, encoder1, controller1)
-
+# TODO
 def motor1_fun():
-	# Step response
-	input('Press "enter" to run a step response test!')
-	motorcontroller1.step_response();
+
+	state = 0
+	while(True)
+		if state == 0:
+			## A motor object
+			pinENA = pyb.Pin(pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
+			pinIN1A = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
+			pinIN2A = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
+			motor = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
+			## An encoder object
+			encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
+			## A controller object
+			controller = controller.Controller(K_p=0.10)
+			## A motor controller object
+			motorcontroller = motorcontroller.MotorController(motor, encoder, controller)
+		elif state == 1:
+			# Step response
+			input('Press "enter" to run a step response test!')
+			motorcontroller1.step_response();
 
 
 
