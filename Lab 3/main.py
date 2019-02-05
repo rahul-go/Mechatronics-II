@@ -35,13 +35,13 @@ def motor1_fun():
 	pinENA = pyb.Pin(pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
 	pinIN1A = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
 	pinIN2A = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
-	motor = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
+	motor1 = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
 	## An encoder object
-	encoder = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
+	encoder1 = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 	## A controller object
-	controller = controller.Controller(K_p=0.10)
+	controller1 = controller.Controller(K_p=0.10)
 	## A motor controller object
-	motorcontroller = motorcontroller.MotorController(motor, encoder, controller)
+	motorcontroller1 = motorcontroller.MotorController(motor, encoder, controller)
 	state = 0
 
 	while(True):
@@ -50,6 +50,11 @@ def motor1_fun():
 			if vcp.read() == b'\x31':
 				state = 1
 
+			self.controller.clear_data()
+			self.controller.set_setpoint(4000)
+			self.encoder.zero()
+			stop = utime.ticks_add(utime.ticks_ms(), 1000)				
+
 
 		elif state == 1:
 			# Step response
@@ -57,6 +62,11 @@ def motor1_fun():
 			
 			# Figure out how and when to set state back to 0
 			state = 0
+
+
+			self.motor.set_duty_cycle(self.controller.run(self.encoder.read()))
+
+		elif state == 2:
 
 		yield (state)
 
