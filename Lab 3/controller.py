@@ -89,10 +89,10 @@ class Controller:
 		
 		## Adds the current time, as read by utime.ticks_ms() to the end of the 
 		#  time list.
-		self.time.append(utime.ticks_ms())
+		# self.time.append(utime.ticks_ms())
 		
 		## Adds the current measurement to the end of the vals list.
-		self.vals.append(measurement)
+		# self.vals.append(measurement)
 
 		## The actuaion value is the difference between the setpoint and 
 		#  measurement values multiplied by the K_p value. If this value is 

@@ -60,8 +60,7 @@ def motor1_fun():
 		elif state == 1:
 			if pos_ctrl1.get():
 				cont.set_setpoint(setpoint1.get())
-				# mot.set_duty_cycle(cont.run(enc.read()))
-				print_task.put(str(enc.read()))
+				mot.set_duty_cycle(cont.run(enc.read()))
 			else:
 				state = 0
 
@@ -98,7 +97,7 @@ def motor2_fun():
 	pinIN2A = pyb.Pin(pyb.Pin.board.PA1, pyb.Pin.OUT_PP)
 	mot = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 5, [1, 2])
 	# An encoder object
-	enc = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PB7], 8, [1, 2])
+	enc = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
 	# A controller object
 	cont = controller.Controller(K_p=0.10)
 
@@ -236,17 +235,15 @@ get_data2 = task_share.Share('H', thread_protect=False, name='Get Data 2')
 
 
 # Create tasks
-motor1_task = cotask.Task(motor1_fun, name='Motor 1', priority=1,
+motor1_task = cotask.Task(motor1_fun, name='Motor 1', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motor1_task)
-motor2_task = cotask.Task(motor2_fun, name='Motor 2', priority=1,
-						  period=10, profile=True, trace=False)
-cotask.task_list.append(motor2_task)
-# user_input = cotask.Task(motor1_fun, name='Motor 1', priority=1,
+# motor2_task = cotask.Task(motor2_fun, name='Motor 2', priority=2,
+# 						  period=10, profile=True, trace=False)
+# cotask.task_list.append(motor2_task)
+# user_input = cotask.Task(user_input, name='Motor 1', priority=1,
 # 						  period=10, profile=True, trace=False)
 # cotask.task_list.append(user_input)
-
-# LINE BENEATH IS THE PROBLEM CODE
 manual_control = cotask.Task(manual_control, name='Manual Control', priority=1,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(manual_control)
