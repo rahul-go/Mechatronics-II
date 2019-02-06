@@ -60,12 +60,12 @@ def motor1_fun():
 		elif state == 1:
 			if pos_ctrl1.get():
 				cont.set_setpoint(setpoint1.get())
-				mot.set_duty_cycle(cont.run(enc.read()))
+				# mot.set_duty_cycle(cont.run(enc.read()))
 				print_task.put(str(enc.read()))
 			else:
 				state = 0
 
-		# Step rsp
+		# Step Response
 		elif state == 2:
 			if setup:
 				cont.clear_data()
@@ -122,7 +122,6 @@ def motor2_fun():
 			if pos_ctrl2.get():
 				cont.set_setpoint(setpoint1.get())
 				mot.set_duty_cycle(cont.run(enc.read()))
-				print_task.put(str(enc.read()))
 			else:
 				state = 0
 
@@ -256,19 +255,19 @@ cotask.task_list.append(manual_control)
 
 # Run the memory garbage collector to ensure memory is as defragmented as
 # possible before the real-time scheduler is started
-gc.collect ()
+gc.collect()
 
 # Run the scheduler with the chosen scheduling algorithm. Quit if any 
 # character is sent through the serial por
-vcp = pyb.USB_VCP ()
-while not vcp.any ():
-	cotask.task_list.pri_sched ()
+vcp = pyb.USB_VCP()
+while not vcp.any():
+	cotask.task_list.pri_sched()
 
 # Empty the comm port buffer of the character(s) just pressed
-vcp.read ()
+vcp.read()
 
 # Print a table of task data and a table of shared information data
-print ('\n' + str (cotask.task_list) + '\n')
-print (task_share.show_all ())
-print (task1.get_trace ())
-print ('\r\n')
+print('\n' + str (cotask.task_list) + '\n')
+print(task_share.show_all ())
+print(task1.get_trace ())
+print('\r\n')
