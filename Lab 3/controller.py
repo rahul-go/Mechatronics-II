@@ -15,6 +15,7 @@
 #  @date January 31, 2019
 
 import utime
+import print_task
 
 ## A controller object.
 #
@@ -72,11 +73,8 @@ class Controller:
 		#  data begins at 0.
 		self.time = [t - self.time[0] for t in self.time]
 		## Combines time and value lists into a list of lists, where each list 
-		#  contains the time and corresponding value.
-		data = zip(self.time, self.vals)
-		#  Prints each value in the data list to the console.
-		for datum in data:
-			print(str(datum[0]) + ', ' + str(datum[1]))
+		#  contains the time and corresponding value, and returns it as a list.
+		return list(zip(self.time, self.vals))
 
 
 
@@ -89,12 +87,12 @@ class Controller:
 		
 		## Adds the current time, as read by utime.ticks_ms() to the end of the 
 		#  time list.
-		# self.time.append(utime.ticks_ms())
+		self.time.append(utime.ticks_ms())
 		
 		## Adds the current measurement to the end of the vals list.
-		# self.vals.append(measurement)
+		self.vals.append(measurement)
 
-		## The actuaion value is the difference between the setpoint and 
+		## The actuation value is the difference between the setpoint and 
 		#  measurement values multiplied by the K_p value. If this value is 
 		#  greater than 100, it is set to 100. If it is less than -100 it is 
 		#  set to -100. This saturation prevents the controller from returning

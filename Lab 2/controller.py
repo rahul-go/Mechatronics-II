@@ -94,7 +94,7 @@ class Controller:
 		## Adds the current measurement to the end of the vals list.
 		self.vals.append(measurement)
 
-		## The actuaion value is the difference between the setpoint and 
+		## The actuation value is the difference between the setpoint and 
 		#  measurement values multiplied by the K_p value. If this value is 
 		#  greater than 100, it is set to 100. If it is less than -100 it is 
 		#  set to -100. This saturation prevents the controller from returning

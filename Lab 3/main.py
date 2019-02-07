@@ -11,10 +11,11 @@ import pyb
 import micropython
 import gc
 
+import utime
+
 import motor
 import encoder
 import controller
-import motorcontroller
 
 import cotask
 import task_share
@@ -39,6 +40,7 @@ def motor1_fun():
 	# A controller object
 	cont = controller.Controller(K_p=0.10)
 
+	setup = True
 	state = 0
 
 	while(True):
@@ -81,8 +83,10 @@ def motor1_fun():
 
 		# Get Data
 		elif state == 3:
-			cont.get_data()
-			state = 0
+			for datum in cont.get_data():
+				print(str(datum[0]) + ', ' + str(datum[1]))
+			get_data1.put(False)
+			state = 0 
 
 		yield(state)
 
@@ -101,6 +105,7 @@ def motor2_fun():
 	# A controller object
 	cont = controller.Controller(K_p=0.10)
 
+	setup = True
 	state = 0
 
 	while(True):
@@ -141,7 +146,8 @@ def motor2_fun():
 
 		# Get Data
 		elif state == 3:
-			cont.get_data()
+			for datum in cont.get_data():
+				print(str(datum[0]) + ', ' + str(datum[1]))
 			state = 0
 
 		yield(state)
@@ -156,37 +162,40 @@ def user_input():
 		# Enter motor to control
 		if state == 0:
 			motor = input('Enter motor to control (1 or 2): ')
-			if motor == 1:
+			if motor == '1':
 				state = 1
-			elif motor == 2:
+			elif motor == '2':
 				state = 2
 			else:
 				print('Invalid input! Try again! :)')
 
 		# Control motor 1
 		if state == 1:
-			control = input('''Enter 1 for position control.
-							   Enter 2 for step response.
-							   ''')
-			if control == 1:
+			control = input('Enter 1 for position control.\nEnter 2 for step response.\nEnter 3 to get data.')
+			if control == '1':
 				setpoint1.put(int(input('Enter setpoint: ')))
 				pos_ctrl1.put(True)
-			elif control == 2:
-				step.rsp1.put(True)
+			elif control == '2':
+				step_rsp1.put(True)
+			elif control == '3':
+				get_data1.put(True)				
 			else:
 				print('Invalid input! Try again! :)')
+			state = 0
 
 		# Control motor 2
 		if state == 2:
-			control = input('''Enter 1 for position control.
-							   Enter 2 for step response.''')
-			if control == 1:
+			control = input('Enter 1 for position control.\nEnter 2 for step response.\nEnter 3 to get data.')
+			if control == '1':
 				setpoint2.put(int(input('Enter setpoint: ')))
 				pos_ctrl2.put(True)
-			elif control == 2:
-				step.rsp2.put(True)
+			elif control == '2':
+				step_rsp2.put(True)
+			elif control == '3':
+				get_data2.put(True)
 			else:
 				print('Invalid input! Try again! :)')
+			state = 0
 
 		yield(state)
 
@@ -199,10 +208,10 @@ def manual_control():
 
 		# Position Control
 		if state == 0:
-			pos_ctrl1.put(1)
-			setpoint1.put(20000)
-			pos_ctrl2.put(1)
-			setpoint2.put(40000)
+			pos_ctrl1.put(True)
+			setpoint1.put(4000)
+			pos_ctrl2.put(True)
+			setpoint2.put(2000)
 			state = 1
 
 		# Step Response 2
@@ -238,15 +247,15 @@ get_data2 = task_share.Share('H', thread_protect=False, name='Get Data 2')
 motor1_task = cotask.Task(motor1_fun, name='Motor 1', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motor1_task)
-# motor2_task = cotask.Task(motor2_fun, name='Motor 2', priority=2,
-# 						  period=10, profile=True, trace=False)
-# cotask.task_list.append(motor2_task)
-# user_input = cotask.Task(user_input, name='Motor 1', priority=1,
-# 						  period=10, profile=True, trace=False)
-# cotask.task_list.append(user_input)
-manual_control = cotask.Task(manual_control, name='Manual Control', priority=1,
+motor2_task = cotask.Task(motor2_fun, name='Motor 2', priority=2,
 						  period=10, profile=True, trace=False)
-cotask.task_list.append(manual_control)
+cotask.task_list.append(motor2_task)
+user_input = cotask.Task(user_input, name='Motor 1', priority=1,
+						  period=1000, profile=True, trace=False)
+cotask.task_list.append(user_input)
+# manual_control = cotask.Task(manual_control, name='Manual Control', priority=1,
+# 						  period=10, profile=True, trace=False)
+# cotask.task_list.append(manual_control)
 
 
 
@@ -266,5 +275,6 @@ vcp.read()
 # Print a table of task data and a table of shared information data
 print('\n' + str (cotask.task_list) + '\n')
 print(task_share.show_all ())
-print(task1.get_trace ())
+# print the motor2_task as well
+print(motor1_task.get_trace ())
 print('\r\n')
