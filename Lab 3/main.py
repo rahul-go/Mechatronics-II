@@ -70,7 +70,7 @@ def motor1_fun():
 		elif state == 2:
 			if setup:
 				cont.clear_data()
-				cont.set_setpoint(4000)
+				cont.set_setpoint(setpoint1.get())
 				enc.zero()
 				stop = utime.ticks_add(utime.ticks_ms(), 1000)
 				setup = False
@@ -133,7 +133,7 @@ def motor2_fun():
 		elif state == 2:
 			if setup:
 				cont.clear_data()
-				cont.set_setpoint(4000)
+				cont.set_setpoint(setpoint1.get())				
 				enc.zero()
 				stop = utime.ticks_add(utime.ticks_ms(), 1000)
 				setup = False
@@ -206,16 +206,33 @@ def manual_control():
 	state = 0
 	while(True):
 
-		# Position Control
+		# # Position Control
+		# if state == 0:
+		# 	pos_ctrl1.put(True)
+		# 	setpoint1.put(4000)
+		# 	pos_ctrl2.put(True)
+		# 	setpoint2.put(2000)
+		# 	state = 1
+
+		# Step Response
 		if state == 0:
-			pos_ctrl1.put(True)
-			setpoint1.put(4000)
-			pos_ctrl2.put(True)
-			setpoint2.put(2000)
+			setpoint1.put(10000)
+			setpoint2.put(10000)
+			step_rsp1.put(True)
+			step_rsp2.put(True)
 			state = 1
 
-		# Step Response 2
-		elif state == 1:
+		# Get Data
+		if state == 1:
+			if step_rsp1.get(False):
+				get_data1.put(True)
+				state = 2
+			# if step_rsp2.get(False):
+			# 	get.data2.put(True)
+			# 	state = 2
+
+		# Idle State
+		elif state == 2:
 			pass
 
 		yield(state)
@@ -250,12 +267,12 @@ cotask.task_list.append(motor1_task)
 motor2_task = cotask.Task(motor2_fun, name='Motor 2', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motor2_task)
-user_input = cotask.Task(user_input, name='Motor 1', priority=1,
-						  period=1000, profile=True, trace=False)
-cotask.task_list.append(user_input)
-# manual_control = cotask.Task(manual_control, name='Manual Control', priority=1,
-# 						  period=10, profile=True, trace=False)
-# cotask.task_list.append(manual_control)
+# user_input = cotask.Task(user_input, name='Motor 1', priority=1,
+# 						  period=750, profile=True, trace=False)
+# cotask.task_list.append(user_input)
+manual_control = cotask.Task(manual_control, name='Manual Control', priority=1,
+						  period=10, profile=True, trace=False)
+cotask.task_list.append(manual_control)
 
 
 
