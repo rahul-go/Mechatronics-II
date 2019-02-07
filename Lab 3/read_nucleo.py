@@ -22,9 +22,12 @@ with serial.Serial(port) as ser:
 	ser.write(b'\x03')
 	# Ctrl + D
 	ser.write(b'\x04')
-
-	# READ AND PARSE
+	# Wait for step response
 	time.sleep(4)
+
+	# Carriage Return
+	ser.write(b'\x0D')
+	time.sleep(1)
 	
 	lines = ser.read_all().decode().splitlines()
 
@@ -38,12 +41,12 @@ with serial.Serial(port) as ser:
 			data.append([float(line[0]), float(line[1])])
 		# Skip line if ValueError exception
 		except ValueError:
-			print('Line parse error. Skipping ' + str(line) + '.')
+			print('Line parse error. Skipping ' + str(line) + '.')			
 
 # Plot data (time: first column of data, position: second column of data)
 pyplot.plot([point[0] for point in data], [point[1] for point in data])
 # Title
-pyplot.title('Lab 2: In Control, K_p = 0.10')
+pyplot.title('Lab 3: On Schedule, Period = 5 ms')
 pyplot.xlabel('Time (milliseconds)')			# x-Axis
 pyplot.ylabel('Position (encoder ticks)')		# y-Axis
 pyplot.xlim([0, 500])
