@@ -25,7 +25,7 @@ import print_task
 
 # Allocate memory so that exceptions raised in interrupt service routines can
 # generate useful diagnostic printouts
-micropython.alloc_emergency_exception_buf (100)
+micropython.alloc_emergency_exception_buf(100)
 
 # TODO
 def motor1_fun():
