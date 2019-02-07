@@ -218,12 +218,14 @@ def manual_control():
 		if state == 0:
 			setpoint1.put(10000)
 			step_rsp1.put(True)
-			state = 1
+			setpoint2.put(10000)
+			step_rsp2.put(True)
+			state = 1			
 
 		# Get Data
 		if state == 1:
 			if step_rsp1.get(False):
-				get_data1.put(True)
+				# get_data1.put(True)
 				state = 2
 
 		# Idle State
@@ -257,11 +259,11 @@ get_data2 = task_share.Share('H', thread_protect=False, name='Get Data 2')
 
 # Create tasks
 motor1_task = cotask.Task(motor1_fun, name='Motor 1', priority=2,
-						  period=5, profile=True, trace=False)
+						  period=10, profile=True, trace=False)
 cotask.task_list.append(motor1_task)
-# motor2_task = cotask.Task(motor2_fun, name='Motor 2', priority=2,
-# 						  period=10, profile=True, trace=False)
-# cotask.task_list.append(motor2_task)
+motor2_task = cotask.Task(motor2_fun, name='Motor 2', priority=2,
+						  period=10, profile=True, trace=False)
+cotask.task_list.append(motor2_task)
 # user_input = cotask.Task(user_input, name='Motor 1', priority=1,
 # 						  period=750, profile=True, trace=False)
 # cotask.task_list.append(user_input)

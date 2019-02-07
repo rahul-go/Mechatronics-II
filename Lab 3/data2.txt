@@ -1,0 +1,4 @@
+TASK             PRI    PERIOD    RUNS   AVG DUR   MAX DUR  AVG LATE  MAX LATE
+Motor 1            2      10.0     503     0.285     0.601     0.321     9.142
+Motor 2            2      10.0     503     0.286     0.607     0.333     9.000
+Manual Control     1      10.0     503     0.070     0.079     0.514    20.379
