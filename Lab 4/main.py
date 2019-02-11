@@ -27,31 +27,51 @@ import print_task
 # generate useful diagnostic printouts
 micropython.alloc_emergency_exception_buf(100)
 
-# Set up pin C0 as an output pin
-pinC0 = pyb.Pin(pyb.Pin.board.PC0, pyb.Pin.OUT_PP)
-pinC0.low()
-# Set up pin C1 as an input pin
-pinC1 = pyb.Pin(pyb.Pin.board.PC1, pyb.Pin.IN)
-pinC1.low()
+# Set up pin C0 as an input pin
+pinC0 = pyb.Pin(pyb.Pin.board.PC0, pyb.Pin.IN)
+# Set up pin C1 as an output pin
+pinC1 = pyb.Pin(pyb.Pin.board.PC1, pyb.Pin.OUT_PP)
 
 # Set up Timer 1 to create interrupts at 1 KHz
-timer = pyb.Timer(1, freq = 1000)
+timer = pyb.Timer(1, freq=1000)
 
 # Set up ADC to read pin C0
 adcPC0 = pyb.ADC(pyb.Pin.board.PC0)
 
-# Set up results quene
-results = task_share.Queue ('I', 1000, thread_protect = True, overwrite = False,
-							name = 'Results')
+# Set up time quene
+time = task_share.Queue('I', 1000, thread_protect = True, overwrite = False,
+						   name = 'Time')
+# Set up values quene
+vals = task_share.Queue('I', 1000, thread_protect = True, overwrite = False,
+						   name = 'Values')
 
 # Define a function that reads ADC on pin C0
-def read_adcPC0(which_timer):
-	results.put(adcPC0.read()
+def read_adcPC0(timer):
+	time.put(utime.ticks_ms())
+	vals.put(adcPC0.read())
 
 
 
-# TODO
+# MAIN PROGRAM
+
+# Activate interrupt callback
+pinC1.low()
 timer.callback(read_adcPC0)
+utime.sleep_ms(100)
+
+# Step input
+pinC1.high()
+utime.sleep_ms(900)
+
+# Deactivate interrupt callback
+timer.callback(None)
+pinC1.low()
+
+# Print from quene
+t_0 = time.get()
+print('0, ' + str(vals.get()))
+while vals.any():
+	print(str(int(time.get())-t_0) + ', ' + str(vals.get()))
 
 
 

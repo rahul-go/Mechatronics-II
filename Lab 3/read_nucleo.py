@@ -12,6 +12,7 @@ import serial
 import time
 
 
+
 port = 'COM4'
 
 
@@ -50,4 +51,3 @@ pyplot.title('Lab 3: On Schedule, Period = 5 ms')
 pyplot.xlabel('Time (milliseconds)')			# x-Axis
 pyplot.ylabel('Position (encoder ticks)')		# y-Axis
 pyplot.xlim([0, 500])
-# pyplot.annotate(str(data[len(data)-1][1]), (500, data[len(data)-1][1]))
