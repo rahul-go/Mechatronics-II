@@ -13,7 +13,7 @@ import time
 
 
 
-port = 'COM6'
+port = 'COM4'
 
 
 
@@ -24,11 +24,7 @@ with serial.Serial(port) as ser:
 	# Ctrl + D
 	ser.write(b'\x04')
 	# Wait for step response
-	time.sleep(4)
-
-	# Carriage Return
-	ser.write(b'\x0D')
-	time.sleep(1)
+	time.sleep(10)
 	
 	lines = ser.read_all().decode().splitlines()
 
