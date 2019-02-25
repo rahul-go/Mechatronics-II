@@ -3,7 +3,7 @@ clear variables
 %% Variables
 g = -32.174;   %gravity
 weight_1=1.1/16;
-weight_2=1.63-2*weight_1;
+weight_2=1.63-2*weight_1
 m_1 = -1*weight_1/g; %mass of wheel, slug
 m_2 = -1*weight_2/g; %mass of body
 r_1 = 2.55/2; %radius of wheel
@@ -21,8 +21,7 @@ A1 = [m_eff -m_2*r_2*cos(y(4)) 0 0
      -m_2*r_2*cos(y(4)) I_eff 0 0
       0 0 1 0
       0 0 0 1];
-A2 = [-T_m/r_1 - b_2/r_1]
-
+A2 = [-T_m/r_1 - b_2/r_1
       
 
 
