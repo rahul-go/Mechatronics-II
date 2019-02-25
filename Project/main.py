@@ -6,10 +6,12 @@ import time
 # i2c = busio.I2C(board.SCL, board.SDA)
 # sensor = adafruit_bno055.BNO055(i2c)
 
+import pyb
+import machine
 import bno055
-from machine import I2C, Pin
 
-i2c = I2C(-1, Pin('A5'), Pin('A4'), timeout=1000)
+i2c = pyb.I2C(1, pyb.I2C.MASTER, baudrate = 100000)
+print(i2c.scan())
 sensor = bno055.BNO055(i2c)
 
 while True:
