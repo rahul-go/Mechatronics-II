@@ -40,14 +40,14 @@ import utime
 
 from micropython import const
 # from adafruit_bus_device.i2c_device import I2CDevice
-# from machine import i2c
+from machine import I2C
 # from adafruit_register.i2c_struct import Struct, UnaryStruct
 import ustruct
 
 # __version__ = "0.0.0-auto.0"
 # __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_BNO055.git"
 
-_CHIP_ID = const(0xa0)
+# _CHIP_ID = const(0xa0)
 
 CONFIG_MODE = const(0x00)
 ACCONLY_MODE = const(0x01)
@@ -197,9 +197,9 @@ class BNO055:
 		self.i2c = i2c
 		self.address = address
 		self.buffer = bytearray(2)
-		chip_id = self._read_register(_ID_REGISTER)
-		if chip_id != _CHIP_ID:
-			raise RuntimeError("bad chip id (%x != %x)" % (chip_id, _CHIP_ID))
+		# chip_id = self._read_register(_ID_REGISTER)
+		# if chip_id != _CHIP_ID:
+			# raise RuntimeError("bad chip id (%x != %x)" % (chip_id, _CHIP_ID))
 		self.reset()
 		self._write_register(_POWER_REGISTER, _POWER_NORMAL)
 		self._write_register(_PAGE_REGISTER, 0x00)
@@ -215,15 +215,16 @@ class BNO055:
 		self.buffer[1] = value
 		# with self.i2c_device as i2c:
 		# 	i2c.write(self.buffer)
-		self.i2c.write_to(self.address, self.buffer)
+		self.i2c.mem_write(self.buffer[1], self.address, self.buffer[0])
 
 	def _read_register(self, register):
 		self.buffer[0] = register
 		# with self.i2c_device as i2c:
 		# 	i2c.write(self.buffer, end=1, stop=False)
 		# 	i2c.readinto(self.buffer, start=1)
-		self.i2c.writeto(self.address, self.buffer[:1], stop=False)
-		self.i2c.readinto(self.buffer[1:])
+		# self.i2c.writeto(self.address, self.buffer[:1], stop=False)
+		self.i2c.mem_write(self.buffer[1], self.address, self.buffer[0])
+		self.i2c.mem_read(self.buffer[1], self.address, self.buffer[0])
 		return self.buffer[1]
 
 	def reset(self):
@@ -235,7 +236,7 @@ class BNO055:
 			pass
 		# wait for the chip to reset (650 ms typ.)
 		# time.sleep(0.7)
-		utime.sleep_ms(70)
+		utime.sleep_ms(700)
 
 	@property
 	def mode(self):
