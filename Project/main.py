@@ -1,28 +1,19 @@
-import time
-# import board
-# import busio
-# import adafruit_bno055
-
-# i2c = busio.I2C(board.SCL, board.SDA)
-# sensor = adafruit_bno055.BNO055(i2c)
-
-import pyb
-import machine
 import bno055
+from machine import I2C, Pin
+import utime
 
-i2c = pyb.I2C(1, pyb.I2C.MASTER, baudrate = 100000)
-print(i2c.scan())
+i2c = I2C(-1, Pin('A5'), Pin('A4'), timeout=1000)
 sensor = bno055.BNO055(i2c)
 
-while True:
-	print('Temperature: {} degrees C'.format(sensor.temperature))
-	print('Accelerometer (m/s^2): {}'.format(sensor.accelerometer))
-	print('Magnetometer (microteslas): {}'.format(sensor.magnetometer))
-	print('Gyroscope (deg/sec): {}'.format(sensor.gyroscope))
-	print('Euler angle: {}'.format(sensor.euler))
-	print('Quaternion: {}'.format(sensor.quaternion))
-	print('Linear acceleration (m/s^2): {}'.format(sensor.linear_acceleration))
-	print('Gravity (m/s^2): {}'.format(sensor.gravity))
+while(True):
+	print('Temperature: {} degrees C'.format(sensor.temperature()))
+	print('Accelerometer (m/s^2): {}'.format(sensor.accelerometer()))
+	print('Magnetometer (microteslas): {}'.format(sensor.magnetometer()))
+	print('Gyroscope (deg/sec): {}'.format(sensor.gyroscope()))
+	print('Euler angle: {}'.format(sensor.euler()))
+	print('Quaternion: {}'.format(sensor.quaternion()))
+	print('Linear acceleration (m/s^2): {}'.format(sensor.linear_acceleration()))
+	print('Gravity (m/s^2): {}'.format(sensor.gravity()))
 	print()
 
-	time.sleep(1)
+	utime.sleep_ms(500)
