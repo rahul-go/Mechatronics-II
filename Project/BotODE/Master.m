@@ -6,6 +6,8 @@ clear vars
 format shortG
 
 %% Variables
+t_f=20;
+
 g = 32.174;   %gravity
 weight_1=1.1/16;    %weight of wheel, lbf
 weight_2=1.63-2*weight_1;       %weight of body, lbf
@@ -21,7 +23,7 @@ I_eff = m_2*r_2^2 + I_2; %effective moment of inertia
 b_1 = 0; %damping coefficient from rolling resistance due to translation of x
 b_2 = 0; %damping coefficient relative from rolling between wheels to body (theta 2-theta1)
 
-%% Mat
+%% Matrix breakup
 A_1_1 = -(b_1*r_1^2*I_eff + b_2*(I_eff + m_2*r_1*r_2))/(r_1^2*(I_eff*m_eff - m_2^2*r_2^2));
 A_1_2 = -(b_2*(I_eff + m_2*r_1*r_2))/(r_1*(I_eff*m_eff - m_2^2*r_2^2));
 A_1_4 = (m_2^2*r_2^2*g)/(I_eff*m_eff - m_2^2*r_2^2);
@@ -40,8 +42,15 @@ B = [B_1
       0
       0 ];
 
-  
-p = [-1,-2,-3,-5];
+%% poles  
+p = [-4+5.5i, -4-5.5i, -40, -50];
 K = place(A,B,p)
 
-run('Closed_Loop');
+sim('Closed_Loop');
+
+
+%% Simulation
+ figure(1)
+ plot(tout, x_out_lin(:,3),'k',tout, x_out_lin(:,4),'b')
+ range=[-50 50 -50 50]
+ Animate(tout, x_out_lin(:,3), x_out_lin(:,4),r_1,r_2, range);

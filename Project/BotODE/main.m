@@ -15,10 +15,10 @@ t_step = 0.001;                 % Time step (s)
 ICs = [0
        0
        0
-       .1];
-r_1=
-r_2=
-   
+       1];
+r_1 = 2.55/2; %radius of wheel
+r_2 = 1.028; %distance from center of wheel to c.g. of body
+ 
    
 botODE = @(t, x) BotEOM(x, T_m);
 % Solve for x (and store corresponding time values)
@@ -30,5 +30,5 @@ plot(t_ode45, x_ode45(:,4));
 xlabel('Time [s]');
 legend('Position [in]','Angle [rad]');
 hold off
-
-Animate(t_ode45, x_ode45(:,3), x_ode45(:,4),r_1,r_2);
+range=[-5 5 -5 5]
+Animate(t_ode45, x_ode45(:,3), x_ode45(:,4),r_1,r_2,range);
