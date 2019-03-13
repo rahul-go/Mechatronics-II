@@ -2,6 +2,7 @@
 
 clc
 clear all
+close all
 clear vars
 format shortG
 
@@ -43,14 +44,34 @@ B = [B_1
       0 ];
 
 %% poles  
-p = [-4+5.5i, -4-5.5i, -400, -500];
+%p = [-4+5.5i, -4-5.5i, -40, -50];
+
+OS = 10;
+T_s = 15;
+[pole_1,pole_2] = Pole_Select(OS,T_s);
+
+p = [pole_1, pole_2, pole_1*10, pole_2*10];
 K = place(A,B,p);
 
 sim('Closed_Loop');
 
 
 %% Simulation
- figure(1)
- plot(tout, x_out_lin(:,3),'k',tout, x_out_lin(:,4),'b')
- range=[-50 50 -50 50];
- Animate(tout, x_out_lin(:,3), x_out_lin(:,4),r_1,r_2, range);
+figure(1)
+plot(tout, x_out_lin(:,3),'k',tout, x_out_lin(:,4),'b');
+title('Position and Angle');
+legend('Position ', 'Angle');
+xlabel('time [s]');
+range = [-20 20 -20 20];
+figure(2)
+plot(tout, torque);
+title('Torque');
+xlabel('time [s]');
+disp("the max torque output is " + round(max(abs(torque)), 2) + " in-lbs");
+disp("The poles are " + round(p(1),3, 'significant') + ", " + ...
+    round(p(2),3, 'significant') + ", " + round(p(3),3,'significant') + ", " ...
+    + round(p(4),3, 'significant'));
+disp("The gain matrix is " + round(K(1), 3, 'significant') + ", " + ...
+    round(K(2),3,'significant') + ", " + round(K(3),3,'significant') + ", " + ...
+    round(K(4),3,'significant'));
+Animate(tout, x_out_lin(:,3), x_out_lin(:,4),r_1,r_2, range);

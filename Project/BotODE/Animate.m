@@ -11,7 +11,7 @@ y2 = y1 + r_2*cos(theta);
 
 
 for i = 1:length(t)
-    figure(2)
+    figure(3)
     plot([x1(i), x2(i)], [y1, y2(i)])
     hold on
     plot([-100,100], [0,0])
