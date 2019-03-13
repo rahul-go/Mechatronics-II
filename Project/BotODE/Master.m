@@ -9,18 +9,16 @@ format shortG
 %% Variables
 t_f=20;
 
-g = 32.174;   %gravity
-weight_1=1.1/16;    %weight of wheel, lbf
-weight_2=1.63-2*weight_1;       %weight of body, lbf
-m_1 = weight_1/g; %mass of wheel, slug
-m_2 = weight_2/g; %mass of body
-r_1 = 2.55/2; %radius of wheel
-r_2 = 1.028; %distance from center of wheel to c.g. of body
-I_1 = m_1*r_1^2; %moment of inertia of wheel slug*in^2
-I_2 = 1; %moment of inertia of body
+g = 9.8;   %gravity [m/s^2]
+m_1 = .023; %mass of wheel [kg]
+m_2 = .538-2*m_1; %mass of body [kg]
+r_1 = .0825; %radius of wheel [m]
+r_2 = .0384; %distance from center of wheel to c.g. of body [m]
+I_1 = .00003569; %moment of inertia of wheel [kg*m^2]
+I_2 = .00190245; %moment of inertia of body [kg*m^2]
 
-m_eff = m_1 + m_2 +(I_1/r_1^2); %effective mass
-I_eff = m_2*r_2^2 + I_2; %effective moment of inertia
+m_eff = m_1 + m_2 +(I_1/r_1^2); %effective mass [kg]
+I_eff = m_2*r_2^2 + I_2; %effective moment of inertia [kg*m^2]
 b_1 = 0; %damping coefficient from rolling resistance due to translation of x
 b_2 = 0; %damping coefficient relative from rolling between wheels to body (theta 2-theta1)
 
@@ -62,12 +60,12 @@ plot(tout, x_out_lin(:,3),'k',tout, x_out_lin(:,4),'b');
 title('Position and Angle');
 legend('Position ', 'Angle');
 xlabel('time [s]');
-range = [-20 20 -20 20];
+range = [-1 1 -1 1 ];
 figure(2)
 plot(tout, torque);
 title('Torque');
 xlabel('time [s]');
-disp("the max torque output is " + round(max(abs(torque)), 2) + " in-lbs");
+disp("the max torque output is " + round(max(abs(torque)), 2) + " N-m");
 disp("The poles are " + round(p(1),3, 'significant') + ", " + ...
     round(p(2),3, 'significant') + ", " + round(p(3),3,'significant') + ", " ...
     + round(p(4),3, 'significant'));
