@@ -43,8 +43,8 @@ B = [B_1
       0 ];
 
 %% poles  
-p = [-4+5.5i, -4-5.5i, -40, -50];
-K = place(A,B,p)
+p = [-4+5.5i, -4-5.5i, -400, -500];
+K = place(A,B,p);
 
 sim('Closed_Loop');
 
@@ -52,5 +52,5 @@ sim('Closed_Loop');
 %% Simulation
  figure(1)
  plot(tout, x_out_lin(:,3),'k',tout, x_out_lin(:,4),'b')
- range=[-50 50 -50 50]
+ range=[-50 50 -50 50];
  Animate(tout, x_out_lin(:,3), x_out_lin(:,4),r_1,r_2, range);
