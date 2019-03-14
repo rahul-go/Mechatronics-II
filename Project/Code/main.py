@@ -2,6 +2,7 @@ import pyb
 import micropython
 import gc
 
+from math import pi, radians
 import utime
 
 import cotask
@@ -64,11 +65,14 @@ def controller_fun():
 
 	# Gain matrix
 	K = [1, 1, 1, 1]
+	# Wheel radius
+	r = 0.0415
+	# Ticks per revolution
+	tpr = 980
 
 	# Encoder objects
 	enc_L = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 	enc_R = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
-
 	# An IMU object
 	IMU = bno055.BNO055(I2C(-1, Pin('A5'), Pin('A4'), timeout=1000))
 
@@ -77,10 +81,10 @@ def controller_fun():
 		setpoint = [xdot_set.get(), thetadot_set.get(), x_set.get(), theta_set.get()];
 
 		# Measured matrix
-		x_act = (encL.read()[0] + encR.read()[0]) / 2
-		xdot_act = (encL.read()[1] + encR.read()[1]) / 2
-		theta_act = IMU.euler()[1]
-		thetadot_act = IMU.gyroscope()[1]
+		x_act = (encL.read()[0]+encR.read()[0])/2 / tpr * (2*pi*r)
+		xdot_act = (encL.read()[1]+encR.read()[1])2 / tpr * (2*pi*r)
+		theta_act = radians(IMU.euler()[1])
+		thetadot_act = radians(IMU.gyroscope()[1])
 		measured = [xdot_act, thetadot_act, x_act, theta_act]
 
 		# Calculate error
