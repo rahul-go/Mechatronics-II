@@ -75,6 +75,11 @@ def controller_fun():
 	# An IMU object
 	IMU = bno055.BNO055(I2C(-1, Pin('A5'), Pin('A4'), timeout=1000))
 
+	# IMU low pass filter
+	a = 0.5
+	theta_act = 0
+	thetadot_act = 0
+
 	while(True):
 		# Setpoint matrix
 		setpoint = [xdot_set.get(), thetadot_set.get(), x_set.get(), theta_set.get()];
@@ -85,8 +90,8 @@ def controller_fun():
 		# Measured matrix
 		x_act = (enc_read[0][0]-enc_read[1][0])/2 / tpr * (2*pi*r)
 		xdot_act = (enc_read[0][1]-enc_read[1][1])/2 / tpr * (2*pi*r)
-		theta_act = radians(IMU.euler()[1])
-		thetadot_act = IMU.gyroscope()[1]	# TODO (radians?)
+		theta_act = a * theta_act + (1-a) * radians(IMU.euler()[1])
+		thetadot_act = a * thetadot_act + (1-a) * IMU.gyroscope()[1]	# TODO (radians?)
 		measured = [xdot_act, thetadot_act, x_act, theta_act]
 
 		# Calculate error
@@ -98,7 +103,7 @@ def controller_fun():
 		# Duty cycle
 		duty_cycle = T_m / Tm_max
 		# Check for stiction
-		if 0.15 < abs(duty_cycle) and abs(duty_cycle) < 0.20:
+		if 0.10 < abs(duty_cycle) and abs(duty_cycle) < 0.20:
 			if not enc_read[0][1]:
 				motorL_dutycycle.put(0.25)
 			else:
@@ -120,8 +125,8 @@ def routine_fun():
 
 	x_set.put(0);
 	xdot_set.put(0);
-	theta_set.put(0);
-	thetadot_set.put(0);
+	theta_set.put(-0.01)
+	thetadot_set.put(0)
 
 	while(True):
 		yield(None)
@@ -140,8 +145,8 @@ def routine_fun():
 # Create inter-task communication variables
 x_set = task_share.Share('i', thread_protect=False, name='Position')
 xdot_set = task_share.Share('i', thread_protect=False, name='Velocity')
-theta_set = task_share.Share('i', thread_protect=False, name='Angular Position')
-thetadot_set = task_share.Share('i', thread_protect=False, name='Angular Velocity')
+theta_set = task_share.Share('f', thread_protect=False, name='Angular Position')
+thetadot_set = task_share.Share('f', thread_protect=False, name='Angular Velocity')
 
 motorL_dutycycle = task_share.Share('f', thread_protect=False, name='Left Motor Duty Cycle')
 motorR_dutycycle = task_share.Share('f', thread_protect=False, name='Right Motor Duty Cycle')
@@ -150,13 +155,13 @@ motorR_dutycycle = task_share.Share('f', thread_protect=False, name='Right Motor
 
 # Create tasks
 motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=2,
-						  period=1, profile=True, trace=False)
+						  period=5, profile=True, trace=False)
 cotask.task_list.append(motorL_task)
 motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=2,
-						  period=1, profile=True, trace=False)
+						  period=5, profile=True, trace=False)
 cotask.task_list.append(motorR_task)
 controller_task = cotask.Task(controller_fun, name='Controller', priority=2,
-						  period=1, profile=True, trace=False)
+						  period=5, profile=True, trace=False)
 cotask.task_list.append(controller_task)
 routine_task = cotask.Task(routine_fun, name='Routine', priority=1,
 						  period=10, profile=True, trace=False)
