@@ -58,7 +58,7 @@ def controller_fun():
 	# All vectors: x_dot, theta_dot, x, theta
 
 	# Gain matrix
-	K = [0.01, 0.04, 0.4, 1]
+	K = [0, 0.04, 0, 1.2]
 
 	# Wheel radius (m)
 	r = 0.0415
@@ -70,6 +70,8 @@ def controller_fun():
 	# Encoder objects
 	enc_L = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 	enc_R = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
+	enc_L.zero()
+	enc_R.zero()
 	# An IMU object
 	IMU = bno055.BNO055(I2C(-1, Pin('A5'), Pin('A4'), timeout=1000))
 
@@ -96,7 +98,7 @@ def controller_fun():
 		# Duty cycle
 		duty_cycle = T_m / Tm_max
 		# Check for stiction
-		if 0.10 < abs(duty_cycle) and abs(duty_cycle) < 0.20:
+		if 0.15 < abs(duty_cycle) and abs(duty_cycle) < 0.20:
 			if not enc_read[0][1]:
 				motorL_dutycycle.put(0.25)
 			else:
@@ -148,13 +150,13 @@ motorR_dutycycle = task_share.Share('f', thread_protect=False, name='Right Motor
 
 # Create tasks
 motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=2,
-						  period=10, profile=True, trace=False)
+						  period=1, profile=True, trace=False)
 cotask.task_list.append(motorL_task)
 motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=2,
-						  period=10, profile=True, trace=False)
+						  period=1, profile=True, trace=False)
 cotask.task_list.append(motorR_task)
 controller_task = cotask.Task(controller_fun, name='Controller', priority=2,
-						  period=10, profile=True, trace=False)
+						  period=1, profile=True, trace=False)
 cotask.task_list.append(controller_task)
 routine_task = cotask.Task(routine_fun, name='Routine', priority=1,
 						  period=10, profile=True, trace=False)

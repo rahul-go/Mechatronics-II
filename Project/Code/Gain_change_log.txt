@@ -90,5 +90,37 @@ K = [0.01, 0.04, 0.4, .8]
 No
 
 22.
-K = [0.01, 0.04, 0.4, 1]
-20. with higher theta
+K = [0.01, 0.05, 0.4, 0.8]
+
+23.
+K = [0.01, 0.05, 0.4, 1.2]
+Better? Jittery
+
+24.
+K = [0.01, 0.04, 0.4, 1.2]
+
+25.
+K = [0.01, 0.04, 0.4, 1.5]
+
+26.
+K = [0, 0, 0, 2]
+Stable in the controls sense
+
+27.
+K = [0, 0.04, 0, 2]
+Unstable in the controls sense
+
+28.
+K = [0, 0.04, 0, 1.5]
+Unstable in the controls sense
+
+29.
+K = [0, 0.04, 0, 1.3]
+Ehh pretty good?
+
+30.
+K = [0, 0.04, 0, 1.2]
+
+31.
+K = [0, 0.04, 0, 1.2] stiction 0.15 to 0.20
+Pretty good, leaving it here for tonight
