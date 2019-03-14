@@ -64,7 +64,8 @@ def controller_fun():
 	# All vectors: x_dot, theta_dot, x, theta
 
 	# Gain matrix
-	K = [-0.00280, 0.00644, -0.00097, 0.125]
+	K = [0, 0.055, 0, 1.25]
+
 	# Wheel radius
 	r = 0.0415
 	# Ticks per revolution
