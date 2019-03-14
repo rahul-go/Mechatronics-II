@@ -35,7 +35,7 @@ def motorL_fun():
 	Tm_max = 0.6
 	
 	while(True):
-		mot.set_duty_cycle(T_m.get()/T_m)
+		mot.set_duty_cycle(T_m.get() / Tm_max * 100)
 		yield(None)
 
 
@@ -53,7 +53,7 @@ def motorR_fun():
 	Tm_max = 0.6
 
 	while(True):
-		mot.set_duty_cycle(T_m.get()/T_m)
+		mot.set_duty_cycle(-T_m.get() / Tm_max * 100)
 		yield(None)
 
 
@@ -64,7 +64,7 @@ def controller_fun():
 	# All vectors: x_dot, theta_dot, x, theta
 
 	# Gain matrix
-	K = [1, 1, 1, 1]
+	K = [-0.00280, 0.00644, -0.00097, 0.125]
 	# Wheel radius
 	r = 0.0415
 	# Ticks per revolution
@@ -81,10 +81,10 @@ def controller_fun():
 		setpoint = [xdot_set.get(), thetadot_set.get(), x_set.get(), theta_set.get()];
 
 		# Measured matrix
-		x_act = (encL.read()[0]+encR.read()[0])/2 / tpr * (2*pi*r)
-		xdot_act = (encL.read()[1]+encR.read()[1])2 / tpr * (2*pi*r)
+		x_act = (enc_L.read()[0]-enc_R.read()[0])/2 / tpr * (2*pi*r)
+		xdot_act = (enc_L.read()[1]-enc_R.read()[1])/2 / tpr * (2*pi*r)
 		theta_act = radians(IMU.euler()[1])
-		thetadot_act = radians(IMU.gyroscope()[1])
+		thetadot_act = IMU.gyroscope()[1]	# TODO (radians?)
 		measured = [xdot_act, thetadot_act, x_act, theta_act]
 
 		# Calculate error
@@ -129,10 +129,10 @@ T_m = task_share.Share('f', thread_protect=False, name='Motor Torque')
 
 
 # Create tasks
-motorL_task = cotask.Task(motor1_fun, name='Left Motor', priority=2,
+motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorL_task)
-motorR_task = cotask.Task(motor2_fun, name='Right Motor', priority=2,
+motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorR_task)
 controller_task = cotask.Task(controller_fun, name='Controller', priority=2,
