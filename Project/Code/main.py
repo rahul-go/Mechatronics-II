@@ -31,11 +31,8 @@ def motorL_fun():
 	pinIN2A = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
 	mot = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
 
-	# Max motor torque (N*m)
-	Tm_max = 0.6
-	
 	while(True):
-		mot.set_duty_cycle(T_m.get() / Tm_max * 100)
+		mot.set_duty_cycle(motorL_dutycycle.get() * 100)
 		yield(None)
 
 
@@ -49,11 +46,8 @@ def motorR_fun():
 	pinIN2A = pyb.Pin(pyb.Pin.board.PA1, pyb.Pin.OUT_PP)
 	mot = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 5, [1, 2])
 
-	# Max motor torque (N*m)
-	Tm_max = 0.6
-
 	while(True):
-		mot.set_duty_cycle(-T_m.get() / Tm_max * 100)
+		mot.set_duty_cycle(motorR_dutycycle.get() * 100)
 		yield(None)
 
 
@@ -64,12 +58,14 @@ def controller_fun():
 	# All vectors: x_dot, theta_dot, x, theta
 
 	# Gain matrix
-	K = [0, 0.055, 0, 1.25]
+	K = [0.01, 0.04, 0.4, 1]
 
-	# Wheel radius
+	# Wheel radius (m)
 	r = 0.0415
 	# Ticks per revolution
 	tpr = 980
+	# Max motor torque (N*m)
+	Tm_max = 0.6
 
 	# Encoder objects
 	enc_L = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
@@ -81,9 +77,12 @@ def controller_fun():
 		# Setpoint matrix
 		setpoint = [xdot_set.get(), thetadot_set.get(), x_set.get(), theta_set.get()];
 
+		# Read encoder values
+		enc_read = [enc_L.read(), enc_R.read()]
+
 		# Measured matrix
-		x_act = (enc_L.read()[0]-enc_R.read()[0])/2 / tpr * (2*pi*r)
-		xdot_act = (enc_L.read()[1]-enc_R.read()[1])/2 / tpr * (2*pi*r)
+		x_act = (enc_read[0][0]-enc_read[1][0])/2 / tpr * (2*pi*r)
+		xdot_act = (enc_read[0][1]-enc_read[1][1])/2 / tpr * (2*pi*r)
 		theta_act = radians(IMU.euler()[1])
 		thetadot_act = IMU.gyroscope()[1]	# TODO (radians?)
 		measured = [xdot_act, thetadot_act, x_act, theta_act]
@@ -92,7 +91,23 @@ def controller_fun():
 		error = [a - b for a, b in zip(setpoint, measured)]
 
 		# Calculate motor torque
-		T_m.put(sum(a*b for a, b in zip(error, K)))
+		T_m = sum(a*b for a, b in zip(error, K))
+
+		# Duty cycle
+		duty_cycle = T_m / Tm_max
+		# Check for stiction
+		if 0.10 < abs(duty_cycle) and abs(duty_cycle) < 0.20:
+			if not enc_read[0][1]:
+				motorL_dutycycle.put(0.25)
+			else:
+				motorL_dutycycle.put(duty_cycle)
+			if not enc_read[1][1]:
+				motorR_dutycycle.put(-0.25)
+			else:
+				motorR_dutycycle.put(-duty_cycle)
+		else:
+			motorL_dutycycle.put(duty_cycle)
+			motorR_dutycycle.put(-duty_cycle)				
 
 		yield(None)
 
@@ -125,7 +140,9 @@ x_set = task_share.Share('i', thread_protect=False, name='Position')
 xdot_set = task_share.Share('i', thread_protect=False, name='Velocity')
 theta_set = task_share.Share('i', thread_protect=False, name='Angular Position')
 thetadot_set = task_share.Share('i', thread_protect=False, name='Angular Velocity')
-T_m = task_share.Share('f', thread_protect=False, name='Motor Torque')
+
+motorL_dutycycle = task_share.Share('f', thread_protect=False, name='Left Motor Duty Cycle')
+motorR_dutycycle = task_share.Share('f', thread_protect=False, name='Right Motor Duty Cycle')
 
 
 
