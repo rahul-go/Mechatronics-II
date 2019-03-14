@@ -23,15 +23,18 @@ micropython.alloc_emergency_exception_buf(100)
 
 # TODO
 def motorL_fun():
-	
+
 	# A motor object
 	pinENA = pyb.Pin(pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
 	pinIN1A = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
 	pinIN2A = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
 	mot = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
+
+	# Max motor torque (N*m)
+	Tm_max = 0.6
 	
 	while(True):
-		print(str(enc.read()[0]))
+		mot.set_duty_cycle(T_m.get()/T_m)
 		yield(None)
 
 
@@ -45,7 +48,11 @@ def motorR_fun():
 	pinIN2A = pyb.Pin(pyb.Pin.board.PA1, pyb.Pin.OUT_PP)
 	mot = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 5, [1, 2])
 
+	# Max motor torque (N*m)
+	Tm_max = 0.6
+
 	while(True):
+		mot.set_duty_cycle(T_m.get()/T_m)
 		yield(None)
 
 
@@ -80,7 +87,7 @@ def controller_fun():
 		error = [a - b for a, b in zip(setpoint, measured)]
 
 		# Calculate motor torque
-		T_m = sum(a*b for a, b in zip(error, K))
+		T_m.put(sum(a*b for a, b in zip(error, K)))
 
 		yield(None)
 
@@ -113,6 +120,7 @@ x_set = task_share.Share('i', thread_protect=False, name='Position')
 xdot_set = task_share.Share('i', thread_protect=False, name='Velocity')
 theta_set = task_share.Share('i', thread_protect=False, name='Angular Position')
 thetadot_set = task_share.Share('i', thread_protect=False, name='Angular Velocity')
+T_m = task_share.Share('f', thread_protect=False, name='Motor Torque')
 
 
 
