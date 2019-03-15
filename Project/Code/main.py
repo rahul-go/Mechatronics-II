@@ -2,7 +2,7 @@ import pyb
 import micropython
 import gc
 
-from math import pi, radians
+from math import copysign, pi, radians
 import utime
 
 import cotask
@@ -60,7 +60,7 @@ def controller_fun():
 	# All vectors: x_dot, theta_dot, x, theta
 
 	# Gain matrix
-	K = [0, 0.04, 0, 1.2]
+	K = [0, 0.04, 0, 1.4]
 
 	# Wheel radius (m)
 	r = 0.0415
@@ -101,20 +101,20 @@ def controller_fun():
 		T_m = sum(a*b for a, b in zip(error, K))
 
 		# Duty cycle
-		duty_cycle = T_m / Tm_max
+		left_dutycycle = T_m / Tm_max + rotate_dutycycle.get()
+		right_dutycycle = -T_m / Tm_max + rotate_dutycycle.get()
+
 		# Check for stiction
-		if 0.10 < abs(duty_cycle) and abs(duty_cycle) < 0.20:
+		if 0.10 < abs(left_dutycycle) and abs(left_dutycycle) < 0.20:
 			if not enc_read[0][1]:
-				motorL_dutycycle.put(0.25)
-			else:
-				motorL_dutycycle.put(duty_cycle)
-			if not enc_read[1][1]:
-				motorR_dutycycle.put(-0.25)
-			else:
-				motorR_dutycycle.put(-duty_cycle)
+				motorL_dutycycle.put(copysign(0.25, left_dutycycle))
 		else:
-			motorL_dutycycle.put(duty_cycle + rotate_dutycycle.get())
-			motorR_dutycycle.put(-duty_cycle - rotate_dutycycle.get())				
+			motorL_dutycycle.put(left_dutycycle)
+		if 0.10 < abs(right_dutycycle) and abs(right_dutycycle) < 0.20:
+			if not enc_read[1][1]:
+				motorR_dutycycle.put(copysign(0.25, right_dutycycle))
+		else:
+			motorR_dutycycle.put(right_dutycycle)
 
 		yield(None)
 
@@ -129,8 +129,8 @@ def remote_fun():
 	# Set up input pins
 	LF = pyb.Pin(pyb.Pin.board.D0, pyb.Pin.IN)		# left forward pin
 	LR = pyb.Pin(pyb.Pin.board.D1, pyb.Pin.IN)		# left reverse pin
-	RF = pyb.Pin(pyb.Pin.board.D2, pyb.Pin.IN)		# right forward pin
-	RR = pyb.Pin(pyb.Pin.board.D3, pyb.Pin.IN)		# right reverse pin
+	RF = pyb.Pin(pyb.Pin.board.D6, pyb.Pin.IN)		# right forward pin
+	RR = pyb.Pin(pyb.Pin.board.D7, pyb.Pin.IN)		# right reverse pin
 
 	while(True):
 
@@ -157,24 +157,26 @@ def remote_fun():
 
 		# Forward / Reverse
 		if left == right:
+			print('1')
 			if left == 0:		# nothing
-				pass
-				# print(1)
 				rotate_dutycycle.put(0)
 			elif left == 1:		# forward
-				setpoint[3] += 0.05
+				setpoint[3] += 0.2
 			elif left == -1:	# reverse
-				setpoint[3] -= 0.05
+				setpoint[3] -= 0.2
 		
 		# Rotation
 		elif left == -right:
+			print('2')
 			if left == 1:		# turn right
-				rotate_dutycycle.put(0.10)
+				rotate_dutycycle.put(0.15)
 			elif left == -1:	# turn left
-				rotate_dutycycle.put(-0.10)
+				rotate_dutycycle.put(-0.15)
 
 		# Forward / Reverse with Rotation
 		elif left != right:
+			print('3')
+			rotate_dutycycle.put(0)
 			if left == 0:
 				if right == 1:
 					pass
@@ -231,7 +233,7 @@ cotask.task_list.append(motorR_task)
 controller_task = cotask.Task(controller_fun, name='Controller', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(controller_task)
-remote_task = cotask.Task(remote_fun, name='Remote', priority=1,
+remote_task = cotask.Task(remote_fun, name='Remote', priority=3,
 						  period=50, profile=True, trace=False)
 cotask.task_list.append(remote_task)
 
