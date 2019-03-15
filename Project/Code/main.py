@@ -121,15 +121,83 @@ def controller_fun():
 
 
 # TODO
-def routine_fun():
+def remote_fun():
 
-	x_set.put(0);
-	xdot_set.put(0);
-	theta_set.put(-0.01)
-	thetadot_set.put(0)
+	# Initialize all setpoints to 0 (edit default below)
+	setpoint = [0, 0, 0, 0]
+
+	# Power on remote chip
+	pyb.Pin(pyb.Pin.board.A0, pyb.Pin.OUT_PP).high()
+
+
+	# Set up input pins
+	LF = pyb.Pin(pyb.Pin.board.D0, pyb.Pin.IN)		# left forward pin
+	LR = pyb.Pin(pyb.Pin.board.D1, pyb.Pin.IN)		# left reverse pin
+	RF = pyb.Pin(pyb.Pin.board.D2, pyb.Pin.IN)		# right forward pin
+	RR = pyb.Pin(pyb.Pin.board.D3, pyb.Pin.IN)		# right reverse pin
 
 	while(True):
+
+		# Default setpoints
+		setpoint = [0, 0, -0.01, 0]
+
+		# Left joystick status
+		if LF.value() and LR.value():
+			left = 0
+		elif LF.value() and not LR.value():
+			left = 1
+		elif not LF.value() and LR.value():
+			left = -1
+
+		# Right joystick status
+		if RF.value() and RR.value():
+			right = 0
+		elif RF.value() and not RR.value():
+			right = 1
+		elif not RF.value() and RR.value():
+			right = -1
+
+
+
+		# Forward / Reverse
+		if left == right:
+			if left == 0:		# nothing
+				# print(1)
+			elif left == 1:		# forward
+				setpoint[3] += 0.05
+			elif left == -1:	# reverse
+				setpoint[3] -= 0.05
+		# Turning in place
+		elif left == -right:
+			if left == 1:		# turn right
+				print(4)
+			elif left == -1:	# turn left
+				print(5)
+
+		# Turning and forward/reverse
+		elif left != right:
+			if left == 0:
+				if right == 1:
+					pass
+				elif right == -1:
+					pass
+			elif right == 0:
+				if left == 1:
+					pass
+				elif left == -1:
+					pass
+
+
+		# Put setpoints in inter-task communication variables
+		x_set.put(int(setpoint[2]))
+		xdot_set.put(int(setpoint[0]))
+		theta_set.put(setpoint[3])
+		thetadot_set.put(setpoint[1])
+
+
+
 		yield(None)
+
 
 
 
@@ -150,22 +218,24 @@ thetadot_set = task_share.Share('f', thread_protect=False, name='Angular Velocit
 
 motorL_dutycycle = task_share.Share('f', thread_protect=False, name='Left Motor Duty Cycle')
 motorR_dutycycle = task_share.Share('f', thread_protect=False, name='Right Motor Duty Cycle')
+# leftJoystick = task_share.Share('i', thread_protect=False, name='Left Joystick')
+# rightJoystick = task_share.Share('i', thread_protect=False, name='Right Joystick')
 
 
 
 # Create tasks
 motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=2,
-						  period=5, profile=True, trace=False)
+						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorL_task)
 motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=2,
-						  period=5, profile=True, trace=False)
+						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorR_task)
 controller_task = cotask.Task(controller_fun, name='Controller', priority=2,
-						  period=5, profile=True, trace=False)
-cotask.task_list.append(controller_task)
-routine_task = cotask.Task(routine_fun, name='Routine', priority=1,
 						  period=10, profile=True, trace=False)
-cotask.task_list.append(routine_task)
+cotask.task_list.append(controller_task)
+remote_task = cotask.Task(remote_fun, name='Remote', priority=1,
+						  period=50, profile=True, trace=False)
+cotask.task_list.append(remote_task)
 
 
 
