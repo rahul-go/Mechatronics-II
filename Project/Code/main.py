@@ -126,10 +126,6 @@ def remote_fun():
 	# Initialize all setpoints to 0 (edit default below)
 	setpoint = [0, 0, 0, 0]
 
-	# Power on remote chip
-	pyb.Pin(pyb.Pin.board.A0, pyb.Pin.OUT_PP).high()
-
-
 	# Set up input pins
 	LF = pyb.Pin(pyb.Pin.board.D0, pyb.Pin.IN)		# left forward pin
 	LR = pyb.Pin(pyb.Pin.board.D1, pyb.Pin.IN)		# left reverse pin
@@ -162,6 +158,7 @@ def remote_fun():
 		# Forward / Reverse
 		if left == right:
 			if left == 0:		# nothing
+				pass
 				# print(1)
 			elif left == 1:		# forward
 				setpoint[3] += 0.05
