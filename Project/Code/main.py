@@ -30,6 +30,7 @@ def motorL_fun():
 	pinIN1A = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
 	pinIN2A = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
 	mot = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 3, [1, 2])
+	mot.set_duty_cycle(0)
 
 	while(True):
 		mot.set_duty_cycle(motorL_dutycycle.get() * 100)
@@ -45,6 +46,7 @@ def motorR_fun():
 	pinIN1A = pyb.Pin(pyb.Pin.board.PA0, pyb.Pin.OUT_PP)
 	pinIN2A = pyb.Pin(pyb.Pin.board.PA1, pyb.Pin.OUT_PP)
 	mot = motor.MotorDriver([pinIN1A, pinIN2A, pinENA], 5, [1, 2])
+	mot.set_duty_cycle(0)
 
 	while(True):
 		mot.set_duty_cycle(motorR_dutycycle.get() * 100)
@@ -70,8 +72,6 @@ def controller_fun():
 	# Encoder objects
 	enc_L = encoder.Encoder([pyb.Pin.board.PB6, pyb.Pin.board.PB7], 4, [1, 2])
 	enc_R = encoder.Encoder([pyb.Pin.board.PC6, pyb.Pin.board.PC7], 8, [1, 2])
-	enc_L.zero()
-	enc_R.zero()
 	# An IMU object
 	IMU = bno055.BNO055(I2C(-1, Pin('A5'), Pin('A4'), timeout=1000))
 
@@ -113,8 +113,8 @@ def controller_fun():
 			else:
 				motorR_dutycycle.put(-duty_cycle)
 		else:
-			motorL_dutycycle.put(duty_cycle)
-			motorR_dutycycle.put(-duty_cycle)				
+			motorL_dutycycle.put(duty_cycle + rotate_dutycycle.get())
+			motorR_dutycycle.put(-duty_cycle - rotate_dutycycle.get())				
 
 		yield(None)
 
@@ -122,13 +122,6 @@ def controller_fun():
 
 # TODO
 def remote_fun():
-
-	# Initialize all setpoints to 0 (edit default below)
-	setpoint = [0, 0, 0, 0]
-
-	# Power on remote chip
-	pyb.Pin(pyb.Pin.board.A0, pyb.Pin.OUT_PP).high()
-
 
 	# Set up input pins
 	LF = pyb.Pin(pyb.Pin.board.D0, pyb.Pin.IN)		# left forward pin
@@ -163,18 +156,20 @@ def remote_fun():
 		if left == right:
 			if left == 0:		# nothing
 				# print(1)
+				rotate_dutycycle.put(0)
 			elif left == 1:		# forward
 				setpoint[3] += 0.05
 			elif left == -1:	# reverse
 				setpoint[3] -= 0.05
-		# Turning in place
+		
+		# Rotation
 		elif left == -right:
 			if left == 1:		# turn right
-				print(4)
+				rotate_dutycycle.put(0.10)
 			elif left == -1:	# turn left
-				print(5)
+				rotate_dutycycle.put(-0.10)
 
-		# Turning and forward/reverse
+		# Forward / Reverse with Rotation
 		elif left != right:
 			if left == 0:
 				if right == 1:
@@ -218,8 +213,7 @@ thetadot_set = task_share.Share('f', thread_protect=False, name='Angular Velocit
 
 motorL_dutycycle = task_share.Share('f', thread_protect=False, name='Left Motor Duty Cycle')
 motorR_dutycycle = task_share.Share('f', thread_protect=False, name='Right Motor Duty Cycle')
-# leftJoystick = task_share.Share('i', thread_protect=False, name='Left Joystick')
-# rightJoystick = task_share.Share('i', thread_protect=False, name='Right Joystick')
+rotate_dutycycle = task_share.Share('f', thread_protect=False, name='Rotate Duty Cycle')
 
 
 
