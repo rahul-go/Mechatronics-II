@@ -22,7 +22,7 @@ micropython.alloc_emergency_exception_buf(100)
 
 
 
-# TODO
+# Left Motor Task Function
 def motorL_fun():
 
 	# A motor object
@@ -38,7 +38,7 @@ def motorL_fun():
 
 
 
-# TODO
+# Right Motor Task Function
 def motorR_fun():
 
 	# A motor object
@@ -54,7 +54,7 @@ def motorR_fun():
 
 
 
-# TODO
+# Controller Task Function
 def controller_fun():
 
 	# All vectors: x_dot, theta_dot, x, theta
@@ -104,14 +104,14 @@ def controller_fun():
 		left_dutycycle = T_m / Tm_max + rotate_dutycycle.get()
 		right_dutycycle = -T_m / Tm_max + rotate_dutycycle.get()
 
-		# Check for stiction
+		# Check for stiction if duty cycle between 10% and 30%
 		if 0.10 < abs(left_dutycycle) and abs(left_dutycycle) < 0.30:
-			if not enc_read[0][1]:
+			if not enc_read[0][1]:		# if left motor not spinning
 				motorL_dutycycle.put(copysign(0.35, left_dutycycle))
 		else:
 			motorL_dutycycle.put(left_dutycycle)
 		if 0.10 < abs(right_dutycycle) and abs(right_dutycycle) < 0.30:
-			if not enc_read[1][1]:
+			if not enc_read[1][1]:		# if right motor not spinning
 				motorR_dutycycle.put(copysign(0.35, right_dutycycle))
 		else:
 			motorR_dutycycle.put(right_dutycycle)
@@ -120,7 +120,7 @@ def controller_fun():
 
 
 
-# TODO
+# Remote Task Function
 def remote_fun():
 
 	# Initialize all setpoints to 0
