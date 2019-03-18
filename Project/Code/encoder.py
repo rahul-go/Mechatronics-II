@@ -66,8 +66,8 @@ class Encoder:
 	#
 	#  The "read()" function is used to return the distance traveled by the
 	#  motor in units of encoder ticks, as well as the velocity, which is in 
-	#  units of encoder ticks/second. The function handles underflow and
-	#  overflow in the 16-bit timer counter by calculating the more likely
+	#  units of encoder ticks/second as a list. The function handles underflow
+	#  and overflow in the 16-bit timer counter by calculating the more likely
 	#  direction of travel in the case of large changes in value. This is most
 	#  effective and accurate when the read function is called quickly enough.
 	#  "Quickly" is determined as a function of motor speed; a motor spinning

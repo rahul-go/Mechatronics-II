@@ -1,0 +1,149 @@
+\hypertarget{classbno055_1_1BNO055}{}\section{bno055.\+B\+N\+O055 Class Reference}
+\label{classbno055_1_1BNO055}\index{bno055.\+B\+N\+O055@{bno055.\+B\+N\+O055}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_a11bd13a73c6afa6e60852b00278bb7c5}\label{classbno055_1_1BNO055_a11bd13a73c6afa6e60852b00278bb7c5}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, i2c, address=0x28)
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_a91bc589bb69785b90cf4d977466176e4}\label{classbno055_1_1BNO055_a91bc589bb69785b90cf4d977466176e4}} 
+def {\bfseries init} (self, mode=N\+D\+O\+F\+\_\+\+M\+O\+DE)
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_a61844cfbd98632496466c6dc9786d0b5}\label{classbno055_1_1BNO055_a61844cfbd98632496466c6dc9786d0b5}} 
+def {\bfseries reset} (self)
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_ae594385255f25c392b8750eaec3aff6f}\label{classbno055_1_1BNO055_ae594385255f25c392b8750eaec3aff6f}} 
+def {\bfseries use\+\_\+external\+\_\+crystal} (self, value)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_a6e4029bdf98339217b2ca55ae0263dfa}\label{classbno055_1_1BNO055_a6e4029bdf98339217b2ca55ae0263dfa}} 
+{\bfseries i2c}
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_ab2c98347acfdaf404889010b780bbad4}\label{classbno055_1_1BNO055_ab2c98347acfdaf404889010b780bbad4}} 
+{\bfseries address}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_a76929e934cbc21e2919b93d9426681c8}\label{classbno055_1_1BNO055_a76929e934cbc21e2919b93d9426681c8}} 
+{\bfseries operation\+\_\+mode} = partial(\+\_\+register, register=0x3d)
+\item 
+\mbox{\Hypertarget{classbno055_1_1BNO055_af572b95d061a9ae02f3835c9ea8f46ef}\label{classbno055_1_1BNO055_af572b95d061a9ae02f3835c9ea8f46ef}} 
+{\bfseries temperature} = partial(\+\_\+register, register=0x34, value=\+None)
+\item 
+{\bfseries accelerometer}
+\item 
+{\bfseries magnetometer}
+\item 
+{\bfseries gyroscope}
+\item 
+{\bfseries euler}
+\item 
+{\bfseries quaternion}
+\item 
+{\bfseries linear\+\_\+acceleration}
+\item 
+{\bfseries gravity}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Driver for the BNO055 9DOF IMU sensor.
+
+Example::
+
+    import bno055
+    from machine import I2C, Pin
+
+    i2c = I2C(-1, Pin(5), Pin(4), timeout=1000)
+    s = bno055.BNO055(i2c)
+    print(s.temperature())
+    print(s.euler())
+\end{DoxyVerb}
+ 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classbno055_1_1BNO055_a91301b0009c2b20466a449fb6dd8c4e7}\label{classbno055_1_1BNO055_a91301b0009c2b20466a449fb6dd8c4e7}} 
+\index{bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}!accelerometer@{accelerometer}}
+\index{accelerometer@{accelerometer}!bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}}
+\subsubsection{\texorpdfstring{accelerometer}{accelerometer}}
+{\footnotesize\ttfamily bno055.\+B\+N\+O055.\+accelerometer\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  partial(\_registers, register=0x08, struct=\textcolor{stringliteral}{'<hhh'},
+                            value=\textcolor{keywordtype}{None}, scale=1/100)
+\end{DoxyCode}
+\mbox{\Hypertarget{classbno055_1_1BNO055_ac4ffc3d38971e557a8033288e3c0cc23}\label{classbno055_1_1BNO055_ac4ffc3d38971e557a8033288e3c0cc23}} 
+\index{bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}!euler@{euler}}
+\index{euler@{euler}!bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}}
+\subsubsection{\texorpdfstring{euler}{euler}}
+{\footnotesize\ttfamily bno055.\+B\+N\+O055.\+euler\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  partial(\_registers, register=0x1a, struct=\textcolor{stringliteral}{'<hhh'},
+                    value=\textcolor{keywordtype}{None}, scale=1/16)
+\end{DoxyCode}
+\mbox{\Hypertarget{classbno055_1_1BNO055_a09037156afd78239c24e3b36c0a74a0c}\label{classbno055_1_1BNO055_a09037156afd78239c24e3b36c0a74a0c}} 
+\index{bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}!gravity@{gravity}}
+\index{gravity@{gravity}!bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}}
+\subsubsection{\texorpdfstring{gravity}{gravity}}
+{\footnotesize\ttfamily bno055.\+B\+N\+O055.\+gravity\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  partial(\_registers, register=0x2e, struct=\textcolor{stringliteral}{'<hhh'},
+                      value=\textcolor{keywordtype}{None}, scale=1/100)
+\end{DoxyCode}
+\mbox{\Hypertarget{classbno055_1_1BNO055_aa2b0a5ebf6c1c9fae96e4ed9ffc7946f}\label{classbno055_1_1BNO055_aa2b0a5ebf6c1c9fae96e4ed9ffc7946f}} 
+\index{bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}!gyroscope@{gyroscope}}
+\index{gyroscope@{gyroscope}!bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}}
+\subsubsection{\texorpdfstring{gyroscope}{gyroscope}}
+{\footnotesize\ttfamily bno055.\+B\+N\+O055.\+gyroscope\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  partial(\_registers, register=0x14, struct=\textcolor{stringliteral}{'<hhh'},
+                        value=\textcolor{keywordtype}{None}, scale=1/900)
+\end{DoxyCode}
+\mbox{\Hypertarget{classbno055_1_1BNO055_af54688ecc717a7fc9ac55108b93b8735}\label{classbno055_1_1BNO055_af54688ecc717a7fc9ac55108b93b8735}} 
+\index{bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}!linear\+\_\+acceleration@{linear\+\_\+acceleration}}
+\index{linear\+\_\+acceleration@{linear\+\_\+acceleration}!bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}}
+\subsubsection{\texorpdfstring{linear\+\_\+acceleration}{linear\_acceleration}}
+{\footnotesize\ttfamily bno055.\+B\+N\+O055.\+linear\+\_\+acceleration\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  partial(\_registers, register=0x28, struct=\textcolor{stringliteral}{'<hhh'},
+                                  value=\textcolor{keywordtype}{None}, scale=1/100)
+\end{DoxyCode}
+\mbox{\Hypertarget{classbno055_1_1BNO055_a7f7662e62f4a2b86f4fff6b0cf511430}\label{classbno055_1_1BNO055_a7f7662e62f4a2b86f4fff6b0cf511430}} 
+\index{bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}!magnetometer@{magnetometer}}
+\index{magnetometer@{magnetometer}!bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}}
+\subsubsection{\texorpdfstring{magnetometer}{magnetometer}}
+{\footnotesize\ttfamily bno055.\+B\+N\+O055.\+magnetometer\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  partial(\_registers, register=0x0e, struct=\textcolor{stringliteral}{'<hhh'},
+                           value=\textcolor{keywordtype}{None}, scale=1/16)
+\end{DoxyCode}
+\mbox{\Hypertarget{classbno055_1_1BNO055_a3b28b229a63940c93f4222a3597ddb4d}\label{classbno055_1_1BNO055_a3b28b229a63940c93f4222a3597ddb4d}} 
+\index{bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}!quaternion@{quaternion}}
+\index{quaternion@{quaternion}!bno055\+::\+B\+N\+O055@{bno055\+::\+B\+N\+O055}}
+\subsubsection{\texorpdfstring{quaternion}{quaternion}}
+{\footnotesize\ttfamily bno055.\+B\+N\+O055.\+quaternion\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  partial(\_registers, register=0x20, struct=\textcolor{stringliteral}{'<hhhh'},
+                         value=\textcolor{keywordtype}{None}, scale=1/(1<<14))
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+bno055.\+py\end{DoxyCompactItemize}

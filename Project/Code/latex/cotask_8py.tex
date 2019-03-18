@@ -1,0 +1,24 @@
+\hypertarget{cotask_8py}{}\section{cotask.\+py File Reference}
+\label{cotask_8py}\index{cotask.\+py@{cotask.\+py}}
+
+
+This file contains classes to run cooperatively scheduled tasks in a multitasking system.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcotask_1_1Task}{cotask.\+Task}}
+\item 
+class \mbox{\hyperlink{classcotask_1_1TaskList}{cotask.\+Task\+List}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains classes to run cooperatively scheduled tasks in a multitasking system. 
+
+Tasks are created as descendents of {\ttfamily class} {\ttfamily Co\+Task}, with the user overriding the {\ttfamily run()} method of {\ttfamily Co\+Task} and the {\ttfamily ready()} method if appropriate. References to all the tasks to be run in the system are kept in a list maintained by class {\ttfamily Co\+Task\+List}; the system scheduler then runs the tasks\textquotesingle{} {\ttfamily run()} methods according to a chosen scheduling algorithm such as round-\/robin or highest-\/priority-\/first.
+
+\begin{DoxyCopyright}{Copyright}
+This program is copyrighted by JR Ridgely and released under the G\+NU Public License, version 3.\+0. 
+\end{DoxyCopyright}
