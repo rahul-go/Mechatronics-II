@@ -65,15 +65,15 @@ class Encoder:
 	## Gets the encoder's traveled distance.
 	#
 	#  The "read()" function is used to return the distance traveled by the
-	#  motor in terms of encoder ticks. The function handles underflow and
+	#  motor in units of encoder ticks, as well as the velocity, which is in 
+	#  units of encoder ticks/second. The function handles underflow and
 	#  overflow in the 16-bit timer counter by calculating the more likely
 	#  direction of travel in the case of large changes in value. This is most
 	#  effective and accurate when the read function is called quickly enough.
 	#  "Quickly" is determined as a function of motor speed; a motor spinning
 	#  more quickly will require the read() function to be called more
 	#  frequently for underflow/overflow to be handled properly.
-	#  
-	#  TODO
+	
 	def read(self):
 
 		## Position of the motor the last time read() was called, according to
@@ -90,18 +90,22 @@ class Encoder:
 		elif delta_pos < -32767:
 			delta_pos += 65536
 
-		## TODO
+		## Stores the previous value for time
 		prev_time = self.time
-		## TODO
+		## Fetches the current time
 		self.time = utime.ticks_us()
-		## TODO
+		## Determines how much time has passed by subtracting the previous time
+		#  from the current one
 		delta_time = self.time - prev_time
 
 		## Distance traveled by the motor (in encoder ticks) relative to the
 		#  current zero. Accounts for timer counter underflow/overflow.
 		self.distance += delta_pos
 
-		## TODO (ticks/s)
+		## Calculates the velocity in ticks/s by dividing the change in 
+		#  position by change in time. The order of operations is chosen 
+		#  such that the rounding caused by the integer division is not 
+		#  multiplied. 
 		velocity = 1000000 * delta_pos // delta_time
 
 		return [self.distance, velocity]
@@ -120,7 +124,8 @@ class Encoder:
 		## Position of the motor in the current read() call, according to the 
 		#  timer counter.
 		self.position = self.timer.counter();
-		## TODO
+		## Sets the time variable to the current value of time.ticks_us(), 
+		#  which is an arbitrary reference point.
 		self.time = utime.ticks_us();
 		## Distance traveled by the motor (in encoder ticks) relative to the
 		#  current zero. Accounts for timer counter underflow/overflow.
