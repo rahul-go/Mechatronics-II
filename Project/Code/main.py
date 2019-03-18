@@ -5,14 +5,14 @@ import gc
 from math import copysign, pi, radians
 import utime
 
+from machine import I2C, Pin
+
 import cotask
 import task_share
 
 import motor
 import encoder
 import bno055
-
-from machine import I2C, Pin
 
 
 
@@ -283,16 +283,16 @@ rotate_dutycycle = task_share.Share('f', thread_protect=False, name='Rotate Duty
 
 
 # Create tasks
-motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=1,
+motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorL_task)
-motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=1,
+motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorR_task)
-controller_task = cotask.Task(controller_fun, name='Controller', priority=1,
+controller_task = cotask.Task(controller_fun, name='Controller', priority=2,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(controller_task)
-remote_task = cotask.Task(remote_fun, name='Remote', priority=2,
+remote_task = cotask.Task(remote_fun, name='Remote', priority=1,
 						  period=50, profile=True, trace=False)
 cotask.task_list.append(remote_task)
 
