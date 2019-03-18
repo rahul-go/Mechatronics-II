@@ -91,7 +91,7 @@ def controller_fun():
 		x_act = (enc_read[0][0]-enc_read[1][0])/2 / tpr * (2*pi*r)
 		xdot_act = (enc_read[0][1]-enc_read[1][1])/2 / tpr * (2*pi*r)
 		theta_act = a * theta_act + (1-a) * radians(IMU.euler()[1])
-		thetadot_act = a * thetadot_act + (1-a) * IMU.gyroscope()[1]	# TODO (radians?)
+		thetadot_act = a * thetadot_act + (1-a) * IMU.gyroscope()[1]
 		measured = [xdot_act, thetadot_act, x_act, theta_act]
 
 		# Calculate error
@@ -105,12 +105,12 @@ def controller_fun():
 		right_dutycycle = -T_m / Tm_max + rotate_dutycycle.get()
 
 		# Check for stiction
-		if 0.10 < abs(left_dutycycle) and abs(left_dutycycle) < 0.25:
+		if 0.10 < abs(left_dutycycle) and abs(left_dutycycle) < 0.30:
 			if not enc_read[0][1]:
 				motorL_dutycycle.put(copysign(0.35, left_dutycycle))
 		else:
 			motorL_dutycycle.put(left_dutycycle)
-		if 0.10 < abs(right_dutycycle) and abs(right_dutycycle) < 0.25:
+		if 0.10 < abs(right_dutycycle) and abs(right_dutycycle) < 0.30:
 			if not enc_read[1][1]:
 				motorR_dutycycle.put(copysign(0.35, right_dutycycle))
 		else:
@@ -123,8 +123,11 @@ def controller_fun():
 # TODO
 def remote_fun():
 
-	# Initialize all setpoints to 0 (edit default below)
-	setpoint = [0, 0, 0, 0]
+	# Initialize all setpoints to 0
+	x_set.put(0)
+	xdot_set.put(0)
+	theta_set.put(0)
+	thetadot_set.put(0)
 
 	# Set up input pins
 	LF = pyb.Pin(pyb.Pin.board.D0, pyb.Pin.IN)		# left forward pin
@@ -132,70 +135,129 @@ def remote_fun():
 	RF = pyb.Pin(pyb.Pin.board.D6, pyb.Pin.IN)		# right forward pin
 	RR = pyb.Pin(pyb.Pin.board.D7, pyb.Pin.IN)		# right reverse pin
 
+	state = 0
+
 	while(True):
 
-		# Default setpoints
-		setpoint = [0, 0, 0, 0]
+		# Check joystick status
+		if state == 0:
 
-		# Left joystick status
-		if LF.value() and LR.value():
-			left = 0
-		elif LF.value() and not LR.value():
-			left = 1
-		elif not LF.value() and LR.value():
-			left = -1
+			# Left joystick status
+			if LF.value() and LR.value():
+				left = 0
+			elif LF.value() and not LR.value():
+				left = 1
+			elif not LF.value() and LR.value():
+				left = -1
 
-		# Right joystick status
-		if RF.value() and RR.value():
-			right = 0
-		elif RF.value() and not RR.value():
-			right = 1
-		elif not RF.value() and RR.value():
-			right = -1
+			# Right joystick status
+			if RF.value() and RR.value():
+				right = 0
+			elif RF.value() and not RR.value():
+				right = 1
+			elif not RF.value() and RR.value():
+				right = -1
 
+			# Forward / Reverse
+			if left == right:
+				if left == 0:		# nothing
+					state = 1
+				elif left == 1:		# forward
+					state = 2
+				elif left == -1:	# reverse
+					state = 3
 
+			# Rotation
+			elif left == -right:
+				if left == 1:		# turn right
+					state = 4
+				elif left == -1:	# turn left
+					state = 5
 
-		# Forward / Reverse
-		if left == right:
-			if left == 0:		# nothing
+			# Forward / Reverse with Rotation		# not implemented
+			elif left != right:
 				rotate_dutycycle.put(0)
-			elif left == 1:		# forward
-				setpoint[3] += 0.2
-			elif left == -1:	# reverse
-				setpoint[3] -= 0.2
-		
-		# Rotation
-		elif left == -right:
-			if left == 1:		# turn right
-				rotate_dutycycle.put(0.15)
-			elif left == -1:	# turn left
-				rotate_dutycycle.put(-0.15)
+				if left == 0:
+					if right == 1:
+						state = 6
+					elif right == -1:
+						state = 7
+				elif right == 0:
+					if left == 1:
+						state = 8
+					elif left == -1:
+						state = 9
 
-		# Forward / Reverse with Rotation
-		elif left != right:
+			yield(0)
+
+
+
+		# Nothing
+		if state == 1:
+			theta_set.put(0)
 			rotate_dutycycle.put(0)
-			if left == 0:
-				if right == 1:
-					pass
-				elif right == -1:
-					pass
-			elif right == 0:
-				if left == 1:
-					pass
-				elif left == -1:
-					pass
-
-
-		# Put setpoints in inter-task communication variables
-		x_set.put(int(setpoint[2]))
-		xdot_set.put(int(setpoint[0]))
-		theta_set.put(setpoint[3])
-		thetadot_set.put(setpoint[1])
+			state = 0
+			yield(1)
 
 
 
-		yield(None)
+		# Forward
+		if state == 2:
+			theta_set.put(0.2)
+			rotate_dutycycle.put(0)
+			state = 0
+			yield(1)
 
+
+
+		# Reverse
+		if state == 3:
+			theta_set.put(-0.2)
+			rotate_dutycycle.put(0)
+			state = 0
+			yield(3)
+
+
+
+		# Turn right
+		if state == 4:
+			theta_set.put(0)
+			rotate_dutycycle.put(0.15)
+			state = 0
+			yield(4)
+
+
+
+		# Turn left
+		if state == 5:
+			theta_set.put(0)
+			rotate_dutycycle.put(-0.15)
+			state = 0
+			yield(5)
+
+
+
+		if state == 6:			
+			state = 1		# not implemented, do nothing
+			yield(6)
+
+
+
+		if state == 7:			
+			state = 1		# not implemented, do nothing
+			yield(7)
+
+
+
+		if state == 8:			
+			state = 1		# not implemented, do nothing
+			yield(8)
+
+
+
+		if state == 9:			
+			state = 1		# not implemented, do nothing
+			yield(9)
 
 
 
