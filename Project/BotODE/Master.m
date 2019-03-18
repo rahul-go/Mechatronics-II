@@ -12,8 +12,8 @@ t_f=20;
 g = 9.8;   %gravity [m/s^2]
 m_1 = .023; %mass of wheel [kg]
 m_2 = .538-2*m_1; %mass of body [kg]
-r_1 = .0825; %radius of wheel [m]
-r_2 = .0384; %distance from center of wheel to c.g. of body [m]
+r_1 = .0825/2; %radius of wheel [m]
+r_2 = .0384*10; %distance from center of wheel to c.g. of body [m]
 I_1 = .00003569; %moment of inertia of wheel [kg*m^2]
 I_2 = .00190245; %moment of inertia of body [kg*m^2]
 
@@ -45,7 +45,7 @@ B = [B_1
 %p = [-4+5.5i, -4-5.5i, -40, -50];
 
 OS = 10;
-T_s = 15;
+T_s = 100;
 [pole_1,pole_2] = Pole_Select(OS,T_s);
 
 p = [pole_1, pole_2, pole_1*10, pole_2*10];
@@ -65,6 +65,8 @@ figure(2)
 plot(tout, torque);
 title('Torque');
 xlabel('time [s]');
+disp("Percent overshoot is " + OS + "%");
+disp("Settling time is " + T_s + " seconds");
 disp("the max torque output is " + round(max(abs(torque)), 2) + " N-m");
 disp("The poles are " + round(p(1),3, 'significant') + ", " + ...
     round(p(2),3, 'significant') + ", " + round(p(3),3,'significant') + ", " ...
