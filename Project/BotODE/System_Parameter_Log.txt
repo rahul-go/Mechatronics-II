@@ -1,0 +1,30 @@
+Percent overshoot is 10%
+Settling time is 15 seconds
+the max torque output is 0.01 N-m
+The poles are -0.267+0.364i, -0.267-0.364i, -2.67+3.64i, -2.67-3.64i
+The gain matrix is -0.0028, 0.00644, -0.00097, 0.125
+
+
+Percent overshoot is 20%
+Settling time is 15 seconds
+the max torque output is 0.01 N-m
+The poles are -0.267+0.521i, -0.267-0.521i, -2.67+5.21i, -2.67-5.21i
+The gain matrix is -0.0047, 0.0066, -0.00274, 0.14
+
+Percent overshoot is 10%
+Settling time is 5 seconds
+the max torque output is 0.04 N-m
+The poles are -0.8+1.09i, -0.8-1.09i, -8+10.9i, -8-10.9i
+The gain matrix is -0.0755, 0.0249, -0.0786, 0.329
+
+Percent overshoot is 10%
+Settling time is 1 seconds
+the max torque output is 24.56 N-m
+The poles are -4+5.46	i, -4-5.46i, -40+54.6i, -40-54.6i
+The gain matrix is -9.44, 0.878, -49.1, 9.75
+
+Percent overshoot is 10%
+Settling time is 3 seconds
+the max torque output is 0.3 N-m
+The poles are -1.33+1.82i, -1.33-1.82i, -13.3+18.2i, -13.3-18.2i
+The gain matrix is -0.35, 0.0601, -0.606, 0.769

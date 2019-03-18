@@ -8,7 +8,7 @@ theta = acos(zeta);
 w_n = 4/(T_s*zeta);
 
 x = -4/T_s;
-y = w_n*sin(theta);
+y = w_n*sin(theta); 
 
 pole_1 = x+y*i;
 pole_2 = x-y*i;
