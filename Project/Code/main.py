@@ -105,14 +105,14 @@ def controller_fun():
 		right_dutycycle = -T_m / Tm_max + rotate_dutycycle.get()
 
 		# Check for stiction
-		if 0.10 < abs(left_dutycycle) and abs(left_dutycycle) < 0.20:
+		if 0.10 < abs(left_dutycycle) and abs(left_dutycycle) < 0.25:
 			if not enc_read[0][1]:
-				motorL_dutycycle.put(copysign(0.25, left_dutycycle))
+				motorL_dutycycle.put(copysign(0.35, left_dutycycle))
 		else:
 			motorL_dutycycle.put(left_dutycycle)
-		if 0.10 < abs(right_dutycycle) and abs(right_dutycycle) < 0.20:
+		if 0.10 < abs(right_dutycycle) and abs(right_dutycycle) < 0.25:
 			if not enc_read[1][1]:
-				motorR_dutycycle.put(copysign(0.25, right_dutycycle))
+				motorR_dutycycle.put(copysign(0.35, right_dutycycle))
 		else:
 			motorR_dutycycle.put(right_dutycycle)
 
@@ -135,7 +135,7 @@ def remote_fun():
 	while(True):
 
 		# Default setpoints
-		setpoint = [0, 0, -0.01, 0]
+		setpoint = [0, 0, 0, 0]
 
 		# Left joystick status
 		if LF.value() and LR.value():
@@ -157,7 +157,6 @@ def remote_fun():
 
 		# Forward / Reverse
 		if left == right:
-			print('1')
 			if left == 0:		# nothing
 				rotate_dutycycle.put(0)
 			elif left == 1:		# forward
@@ -167,7 +166,6 @@ def remote_fun():
 		
 		# Rotation
 		elif left == -right:
-			print('2')
 			if left == 1:		# turn right
 				rotate_dutycycle.put(0.15)
 			elif left == -1:	# turn left
@@ -175,7 +173,6 @@ def remote_fun():
 
 		# Forward / Reverse with Rotation
 		elif left != right:
-			print('3')
 			rotate_dutycycle.put(0)
 			if left == 0:
 				if right == 1:
