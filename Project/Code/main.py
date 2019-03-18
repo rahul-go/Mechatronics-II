@@ -283,16 +283,16 @@ rotate_dutycycle = task_share.Share('f', thread_protect=False, name='Rotate Duty
 
 
 # Create tasks
-motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=2,
+motorL_task = cotask.Task(motorL_fun, name='Left Motor', priority=1,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorL_task)
-motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=2,
+motorR_task = cotask.Task(motorR_fun, name='Right Motor', priority=1,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(motorR_task)
-controller_task = cotask.Task(controller_fun, name='Controller', priority=2,
+controller_task = cotask.Task(controller_fun, name='Controller', priority=1,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(controller_task)
-remote_task = cotask.Task(remote_fun, name='Remote', priority=3,
+remote_task = cotask.Task(remote_fun, name='Remote', priority=1,
 						  period=50, profile=True, trace=False)
 cotask.task_list.append(remote_task)
 
@@ -314,6 +314,6 @@ vcp.read()
 # Print a table of task data and a table of shared information data
 print('\n' + str (cotask.task_list) + '\n')
 print(task_share.show_all ())
-# print the motor2_task as well
+# Print the motor2_task as well
 print(motor1_task.get_trace ())
 print('\r\n')
