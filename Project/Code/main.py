@@ -7,11 +7,11 @@ import utime
 
 import cotask
 import task_share
-import print_task
 
 import motor
 import encoder
 import bno055
+
 from machine import I2C, Pin
 
 
@@ -292,7 +292,7 @@ cotask.task_list.append(motorR_task)
 controller_task = cotask.Task(controller_fun, name='Controller', priority=1,
 						  period=10, profile=True, trace=False)
 cotask.task_list.append(controller_task)
-remote_task = cotask.Task(remote_fun, name='Remote', priority=1,
+remote_task = cotask.Task(remote_fun, name='Remote', priority=2,
 						  period=50, profile=True, trace=False)
 cotask.task_list.append(remote_task)
 
