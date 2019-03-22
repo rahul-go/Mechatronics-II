@@ -202,16 +202,16 @@ def remote_fun():
 
 
 		# Forward
-		if state == 2:
+		elif state == 2:
 			theta_set.put(0.2)
 			rotate_dutycycle.put(0)
 			state = 0
-			yield(1)
+			yield(2)
 
 
 
 		# Reverse
-		if state == 3:
+		elif state == 3:
 			theta_set.put(-0.2)
 			rotate_dutycycle.put(0)
 			state = 0
@@ -220,7 +220,7 @@ def remote_fun():
 
 
 		# Turn right
-		if state == 4:
+		elif state == 4:
 			theta_set.put(0)
 			rotate_dutycycle.put(0.15)
 			state = 0
@@ -229,7 +229,7 @@ def remote_fun():
 
 
 		# Turn left
-		if state == 5:
+		elif state == 5:
 			theta_set.put(0)
 			rotate_dutycycle.put(-0.15)
 			state = 0
@@ -237,25 +237,25 @@ def remote_fun():
 
 
 
-		if state == 6:			
+		elif state == 6:			
 			state = 1		# not implemented, do nothing
 			yield(6)
 
 
 
-		if state == 7:			
+		elif state == 7:			
 			state = 1		# not implemented, do nothing
 			yield(7)
 
 
 
-		if state == 8:			
+		elif state == 8:			
 			state = 1		# not implemented, do nothing
 			yield(8)
 
 
 
-		if state == 9:			
+		elif state == 9:			
 			state = 1		# not implemented, do nothing
 			yield(9)
 
