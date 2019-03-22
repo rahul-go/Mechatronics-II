@@ -193,7 +193,7 @@ def remote_fun():
 
 
 		# Nothing
-		if state == 1:
+		elif state == 1:
 			theta_set.put(0)
 			rotate_dutycycle.put(0)
 			state = 0
