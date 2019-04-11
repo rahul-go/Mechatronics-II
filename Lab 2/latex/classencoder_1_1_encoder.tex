@@ -1,5 +1,5 @@
 \hypertarget{classencoder_1_1_encoder}{}\section{encoder.\+Encoder Class Reference}
-\label{classencoder_1_1_encoder}\index{encoder.Encoder@{encoder.Encoder}}
+\label{classencoder_1_1_encoder}\index{encoder.\+Encoder@{encoder.\+Encoder}}
 
 
 An encoder driver object.  
@@ -41,9 +41,9 @@ January 24, 2019
 
 \subsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classencoder_1_1_encoder_a34939827412badc93f8744540676e833}\label{classencoder_1_1_encoder_a34939827412badc93f8744540676e833}} 
-\index{encoder.Encoder@{encoder.Encoder}!\_\_init\_\_@{\_\_init\_\_}}
-\index{\_\_init\_\_@{\_\_init\_\_}!encoder.Encoder@{encoder.Encoder}}
-\subsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+\index{encoder\+::\+Encoder@{encoder\+::\+Encoder}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!encoder\+::\+Encoder@{encoder\+::\+Encoder}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
 {\footnotesize\ttfamily def encoder.\+Encoder.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{pins,  }\item[{}]{timer,  }\item[{}]{channels }\end{DoxyParamCaption})}
 
 
@@ -65,8 +65,8 @@ The constructor is called by passing the pin objects (as a list) corresponding t
 
 \subsection{Member Function Documentation}
 \mbox{\Hypertarget{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}\label{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}} 
-\index{encoder.Encoder@{encoder.Encoder}!read@{read}}
-\index{read@{read}!encoder.Encoder@{encoder.Encoder}}
+\index{encoder\+::\+Encoder@{encoder\+::\+Encoder}!read@{read}}
+\index{read@{read}!encoder\+::\+Encoder@{encoder\+::\+Encoder}}
 \subsubsection{\texorpdfstring{read()}{read()}}
 {\footnotesize\ttfamily def encoder.\+Encoder.\+read (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
 
@@ -75,8 +75,8 @@ The constructor is called by passing the pin objects (as a list) corresponding t
 Gets the encoder\textquotesingle{}s traveled distance. 
 
 The \char`\"{}read()\char`\"{} function is used to return the distance traveled by the motor in terms of encoder ticks. The function handles underflow and overflow in the 16-\/bit timer counter by calculating the more likely direction of travel in the case of large changes in value. This is most effective and accurate when the read function is called quickly enough. \char`\"{}\+Quickly\char`\"{} is determined as a function of motor speed; a motor spinning more quickly will require the \mbox{\hyperlink{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}{read()}} function to be called more frequently for underflow/overflow to be handled properly. \mbox{\Hypertarget{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}\label{classencoder_1_1_encoder_ae238ecdbcbce8a193c2e0ffbb4d1dd29}} 
-\index{encoder.Encoder@{encoder.Encoder}!zero@{zero}}
-\index{zero@{zero}!encoder.Encoder@{encoder.Encoder}}
+\index{encoder\+::\+Encoder@{encoder\+::\+Encoder}!zero@{zero}}
+\index{zero@{zero}!encoder\+::\+Encoder@{encoder\+::\+Encoder}}
 \subsubsection{\texorpdfstring{zero()}{zero()}}
 {\footnotesize\ttfamily def encoder.\+Encoder.\+zero (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
 
@@ -88,8 +88,8 @@ The zero function resets the timer counter, position of the motor, and distance 
 
 \subsection{Member Data Documentation}
 \mbox{\Hypertarget{classencoder_1_1_encoder_ac16be7b70ef28d19b75108d422f82e28}\label{classencoder_1_1_encoder_ac16be7b70ef28d19b75108d422f82e28}} 
-\index{encoder.Encoder@{encoder.Encoder}!distance@{distance}}
-\index{distance@{distance}!encoder.Encoder@{encoder.Encoder}}
+\index{encoder\+::\+Encoder@{encoder\+::\+Encoder}!distance@{distance}}
+\index{distance@{distance}!encoder\+::\+Encoder@{encoder\+::\+Encoder}}
 \subsubsection{\texorpdfstring{distance}{distance}}
 {\footnotesize\ttfamily encoder.\+Encoder.\+distance}
 
@@ -98,8 +98,8 @@ The zero function resets the timer counter, position of the motor, and distance 
 Distance traveled by the motor (in encoder ticks) relative to the current zero. 
 
 Accounts for timer counter underflow/overflow. \mbox{\Hypertarget{classencoder_1_1_encoder_a9c15eb087b5869c188cf94e53ea3b4f5}\label{classencoder_1_1_encoder_a9c15eb087b5869c188cf94e53ea3b4f5}} 
-\index{encoder.Encoder@{encoder.Encoder}!position@{position}}
-\index{position@{position}!encoder.Encoder@{encoder.Encoder}}
+\index{encoder\+::\+Encoder@{encoder\+::\+Encoder}!position@{position}}
+\index{position@{position}!encoder\+::\+Encoder@{encoder\+::\+Encoder}}
 \subsubsection{\texorpdfstring{position}{position}}
 {\footnotesize\ttfamily encoder.\+Encoder.\+position}
 
@@ -108,8 +108,8 @@ Accounts for timer counter underflow/overflow. \mbox{\Hypertarget{classencoder_1
 Position of the motor the last time \mbox{\hyperlink{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}{read()}} was called, according to to the timer counter. 
 
 Position of the motor in the current \mbox{\hyperlink{classencoder_1_1_encoder_aa1c1535160682500f5214f45d8197027}{read()}} call, according to the timer counter.\mbox{\Hypertarget{classencoder_1_1_encoder_a8e9c3e1317abc4f6fbe95468c69223d1}\label{classencoder_1_1_encoder_a8e9c3e1317abc4f6fbe95468c69223d1}} 
-\index{encoder.Encoder@{encoder.Encoder}!timer@{timer}}
-\index{timer@{timer}!encoder.Encoder@{encoder.Encoder}}
+\index{encoder\+::\+Encoder@{encoder\+::\+Encoder}!timer@{timer}}
+\index{timer@{timer}!encoder\+::\+Encoder@{encoder\+::\+Encoder}}
 \subsubsection{\texorpdfstring{timer}{timer}}
 {\footnotesize\ttfamily encoder.\+Encoder.\+timer}
 
